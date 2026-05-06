@@ -18,12 +18,13 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // DEPLOYMENT MARKER: 2026-05-06 23:52 UTC - Vercel test commit
   const session = await getSession();
 
   // If there's no session, we render the children (Login page) without the sidebar
   // This layout wrapper is used for all /admin/* routes.
   // The middleware handles redirecting unauthenticated users to /admin/login
-  
+
   if (!session) {
     return <div className="min-h-screen bg-slate-950 text-slate-200">{children}</div>;
   }
