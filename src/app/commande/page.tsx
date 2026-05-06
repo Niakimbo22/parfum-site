@@ -19,22 +19,22 @@ export default async function CommandePage() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-1 py-12 px-4 md:px-8 text-slate-200">
+      <main className="flex-1 py-16 px-6 md:px-8">
         <div className="max-w-6xl mx-auto">
-          <header className="mb-12 text-center">
-            <p className="text-[10px] uppercase tracking-[0.5em] text-gold font-bold mb-3">
-              Parfumerie Les 2 As
-            </p>
-            <h1 className="text-4xl font-serif text-white mb-4">Passer une commande</h1>
-            <div className="w-24 h-px bg-gold mx-auto mb-4"></div>
-            <p className="text-gray-500 max-w-md mx-auto text-sm">
+          <header className="mb-16">
+            <div className="eyebrow mb-5">Commande</div>
+            <h1 className="font-serif text-5xl md:text-6xl text-cream tracking-tight leading-none mb-4">
+              Votre <em className="not-italic text-gold italic">Sélection</em>
+            </h1>
+            <div className="w-full h-px bg-gold/10 mt-8 mb-0"></div>
+            <p className="text-cream/40 max-w-md text-sm mt-6 leading-relaxed">
               Sélectionnez vos fragrances, renseignez vos coordonnées. Nous vous contacterons pour confirmer et organiser la livraison.
             </p>
           </header>
 
           {available.length === 0 ? (
-            <div className="text-center py-20 bg-luxury-black border border-gold/10 rounded-sm">
-              <p className="text-gray-500 italic">Aucun parfum disponible pour le moment.</p>
+            <div className="text-center py-20 bg-luxury-charcoal border border-gold/8">
+              <p className="text-cream/30 italic text-sm">Aucun parfum disponible pour le moment.</p>
             </div>
           ) : (
             <CommandeForm perfumes={available} />
@@ -42,7 +42,7 @@ export default async function CommandePage() {
         </div>
       </main>
 
-      <footer className="border-t border-gold/10 py-6 text-center text-xs text-gray-600">
+      <footer className="border-t border-gold/10 py-8 text-center text-[10px] text-cream/20 tracking-widest uppercase">
         © {new Date().getFullYear()} Les 2 As Parfumerie — Tous droits réservés
       </footer>
     </div>

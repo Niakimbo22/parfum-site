@@ -1,111 +1,303 @@
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import { InstagramIcon, FacebookIcon } from "@/components/SocialIcons";
+
+const BRANDS = [
+  "Dior", "Chanel", "Creed", "Bvlgari", "YSL",
+  "Paco Rabanne", "Versace", "Armani", "JPG", "Mont Blanc", "MFK"
+];
+
+const FEATURED = [
+  {
+    num: "01",
+    title: "Pour Lui",
+    desc: "Puissance & Élégance",
+    img: "/images/parfums/dior-sauvage.png",
+    href: "/catalogue",
+  },
+  {
+    num: "02",
+    title: "Pour Elle",
+    desc: "Grâce & Mystère",
+    img: "/images/parfums/chanel-n5.png",
+    href: "/catalogue",
+  },
+  {
+    num: "03",
+    title: "Unisexe",
+    desc: "Audace & Harmonie",
+    img: "/images/parfums/baccarat.png",
+    href: "/catalogue",
+  },
+];
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen noise-overlay">
       <Navbar />
-      
-      {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Overlay */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80')] bg-cover bg-center">
-          <div className="absolute inset-0 bg-luxury-black/70 backdrop-blur-[2px]"></div>
+
+      {/* ── Hero ─────────────────────────────────────── */}
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-luxury-black">
+
+        {/* Ambient background glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] rounded-full bg-gold/4 blur-[120px]"></div>
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gold/3 blur-[100px]"></div>
         </div>
-        
-        <div className="relative z-10 text-center px-4 max-w-4xl">
-          <h2 className="text-gold uppercase tracking-[0.3em] text-sm mb-4 font-medium animate-fade-in">
-            L'Essence du Raffinement
-          </h2>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 text-white leading-tight">
-            Parfumerie <span className="gold-text italic">Les 2 As</span>
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-            Une sélection prestigieuse de fragrances rares. Laissez-vous envoûter par des notes d'exception créées pour marquer les esprits.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link 
-              href="/catalogue" 
-              className="gold-button flex items-center justify-center gap-2 group"
-            >
-              Explorer la Collection
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link 
-              href="/a-propos" 
-              className="border border-white/20 hover:border-gold/50 text-white px-8 py-3 rounded-sm transition-all hover:bg-white/5"
-            >
-              Notre Histoire
-            </Link>
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left: editorial text */}
+            <div className="flex flex-col gap-8">
+
+              {/* Eyebrow */}
+              <div className="eyebrow stagger-item animate-delay-100">
+                Depuis 2010
+              </div>
+
+              {/* Main title */}
+              <h1 className="stagger-item animate-delay-200 leading-none">
+                <span className="block font-serif text-7xl md:text-8xl lg:text-9xl text-cream tracking-tight">
+                  L'Art
+                </span>
+                <span className="block font-serif text-7xl md:text-8xl lg:text-9xl text-cream tracking-tight">
+                  du
+                </span>
+                <span className="block font-serif italic text-7xl md:text-8xl lg:text-9xl shimmer-gold tracking-tight">
+                  Parfum
+                </span>
+              </h1>
+
+              {/* Sub */}
+              <p className="stagger-item animate-delay-300 text-cream/50 text-base md:text-lg font-light leading-relaxed max-w-sm">
+                Une sélection de fragrances d'exception — choisies pour sublimer votre présence et marquer les esprits.
+              </p>
+
+              {/* CTAs */}
+              <div className="stagger-item animate-delay-400 flex flex-col sm:flex-row gap-4 items-start">
+                <Link
+                  href="/catalogue"
+                  className="gold-button inline-flex items-center gap-3 group"
+                >
+                  Explorer la Collection
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/a-propos"
+                  className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-cream/50 hover:text-cream border border-cream/10 hover:border-cream/30 px-8 py-3 transition-all duration-300"
+                >
+                  Notre Histoire
+                </Link>
+              </div>
+
+              {/* Brands marquee */}
+              <div className="stagger-item animate-delay-500 pt-8 border-t border-gold/10">
+                <p className="text-[9px] tracking-[0.4em] uppercase text-cream/30 mb-4">Marques distribuées</p>
+                <div className="flex flex-wrap gap-x-4 gap-y-2">
+                  {BRANDS.map((b, i) => (
+                    <span key={b} className="text-[10px] tracking-widest text-cream/40 hover:text-gold transition-colors cursor-default">
+                      {b}{i < BRANDS.length - 1 && <span className="text-gold/30 ml-4">·</span>}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: perfume image */}
+            <div className="stagger-item animate-delay-300 relative flex justify-center lg:justify-end">
+              <div className="relative w-[340px] md:w-[440px] h-[500px] md:h-[640px]">
+                {/* Glow behind image */}
+                <div className="absolute inset-0 bg-gold/8 blur-[60px] rounded-full scale-90"></div>
+                {/* Image with gradient mask */}
+                <div
+                  className="relative w-full h-full"
+                  style={{
+                    maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                  }}
+                >
+                  <img
+                    src="/images/parfums/creed-aventus.png"
+                    alt="Creed Aventus"
+                    className="w-full h-full object-contain drop-shadow-2xl"
+                  />
+                </div>
+                {/* Decorative number */}
+                <span className="absolute top-6 right-6 font-serif text-[80px] leading-none text-gold/5 pointer-events-none select-none">
+                  N°1
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gold/50">
-          <span className="text-[10px] uppercase tracking-widest">Découvrir</span>
-          <div className="w-px h-12 bg-gradient-to-b from-gold/50 to-transparent"></div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-cream/30 z-10">
+          <span className="text-[9px] uppercase tracking-[0.4em]">Découvrir</span>
+          <ChevronDown className="w-4 h-4 animate-bounce" />
         </div>
       </section>
 
-      {/* Featured Categories */}
-      <section className="py-24 px-4 bg-luxury-black">
+      {/* ── Featured Collections ──────────────────── */}
+      <section className="py-32 px-6 bg-luxury-charcoal">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div>
-              <h2 className="text-gold uppercase tracking-widest text-sm mb-4">Univers</h2>
-              <h3 className="text-4xl font-serif text-white">Collections Signature</h3>
+              <div className="eyebrow mb-4">Univers</div>
+              <h2 className="font-serif text-4xl md:text-5xl text-cream tracking-tight">
+                Collections <em className="not-italic text-gold">Signature</em>
+              </h2>
             </div>
-            <Link href="/catalogue" className="text-gold border-b border-gold/30 pb-1 hover:border-gold transition-all text-sm uppercase tracking-widest">
+            <Link
+              href="/catalogue"
+              className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gold/60 hover:text-gold transition-colors"
+            >
               Voir tout le catalogue
+              <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: "Pour Lui", desc: "Puissance & Élégance", img: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&q=80" },
-              { title: "Pour Elle", desc: "Grâce & Mystère", img: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80" },
-              { title: "Unisexe", desc: "Audace & Harmonie", img: "https://images.unsplash.com/photo-1583467875263-d50dee373707?auto=format&fit=crop&q=80" }
-            ].map((cat, i) => (
-              <div key={i} className="group relative h-[500px] overflow-hidden rounded-sm cursor-pointer">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${cat.img})` }}
-                ></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-luxury-black via-transparent to-transparent opacity-80"></div>
-                <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <h4 className="text-2xl font-serif text-white mb-2">{cat.title}</h4>
-                  <p className="text-gray-400 text-sm uppercase tracking-widest mb-6">{cat.desc}</p>
-                  <div className="w-10 h-px bg-gold group-hover:w-full transition-all duration-500"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {FEATURED.map((cat, i) => (
+              <Link
+                key={i}
+                href={cat.href}
+                className="group relative h-[600px] overflow-hidden cursor-pointer block"
+                style={{ animationDelay: `${i * 0.15}s` }}
+              >
+                {/* Number */}
+                <span className="absolute top-6 left-6 z-20 font-serif text-xs text-cream/30 tracking-widest">
+                  {cat.num}
+                </span>
+
+                {/* Image */}
+                <div className="absolute inset-0 bg-luxury-charcoal">
+                  <img
+                    src={cat.img}
+                    alt={cat.title}
+                    className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-105 p-8"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black via-luxury-black/30 to-transparent"></div>
                 </div>
-              </div>
+
+                {/* Hover glow */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gold/3"></div>
+
+                {/* Text */}
+                <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
+                  <p className="text-[9px] uppercase tracking-[0.35em] text-gold/70 mb-2">{cat.desc}</p>
+                  <h3 className="font-serif text-2xl text-cream mb-6 group-hover:text-gold transition-colors duration-300">
+                    {cat.title}
+                  </h3>
+                  <div className="w-8 h-px bg-gold group-hover:w-16 transition-all duration-500 ease-out"></div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
-      
-      {/* Footer */}
-      <footer className="bg-luxury-black border-t border-gold/10 py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="font-serif text-2xl gold-text font-bold tracking-widest mb-6">LES 2 AS</h2>
-          <p className="text-gray-500 text-sm max-w-md mx-auto mb-8">
-            L'excellence de la parfumerie fine. Une expérience olfactive inégalée, conçue pour les connaisseurs.
-          </p>
-          <div className="flex justify-center space-x-6 mb-8 text-gray-400">
-            <span className="hover:text-gold cursor-pointer transition-colors">Instagram</span>
-            <span className="hover:text-gold cursor-pointer transition-colors">Facebook</span>
-            <span className="hover:text-gold cursor-pointer transition-colors">TikTok</span>
+
+      {/* ── Editorial quote ───────────────────────── */}
+      <section className="py-28 px-6 bg-luxury-black text-center border-y border-gold/8">
+        <div className="max-w-3xl mx-auto">
+          <blockquote
+            className="font-display italic text-3xl md:text-5xl text-cream/80 leading-tight mb-8"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            "Le parfum est l'ombre de l'âme,<br />une promesse silencieuse de beauté."
+          </blockquote>
+          <div className="eyebrow justify-center text-gold/50">
+            Maison Les 2 As
           </div>
-          
-          <div className="flex flex-col items-center gap-4">
-            <p className="text-gray-600 text-[10px] uppercase tracking-widest">
+        </div>
+      </section>
+
+      {/* ── Footer ───────────────────────────────── */}
+      <footer className="bg-luxury-charcoal border-t border-gold/10 pt-20 pb-10 px-6">
+        <div className="max-w-7xl mx-auto">
+
+          {/* Top grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+            {/* Maison */}
+            <div>
+              <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
+              <p className="text-cream/35 text-sm leading-relaxed">
+                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.
+              </p>
+            </div>
+
+            {/* Boutique */}
+            <div>
+              <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Boutique</h4>
+              <ul className="space-y-3">
+                {["Catalogue", "Nouveautés", "Bestsellers", "Coffrets"].map(l => (
+                  <li key={l}>
+                    <Link href="/catalogue" className="text-cream/40 hover:text-cream text-sm transition-colors">
+                      {l}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Contact</h4>
+              <ul className="space-y-3 text-sm text-cream/40">
+                <li>123 Avenue des Champs-Élysées</li>
+                <li>75008 Paris, France</li>
+                <li>
+                  <a href="mailto:contact@les2as.fr" className="hover:text-cream transition-colors">
+                    contact@les2as.fr
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Newsletter */}
+            <div>
+              <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Newsletter</h4>
+              <p className="text-cream/35 text-xs mb-4 leading-relaxed">
+                Recevez nos nouvelles parutions et offres exclusives.
+              </p>
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="votre@email.fr"
+                  className="flex-1 bg-luxury-black border border-gold/15 text-cream text-xs px-4 py-2.5 focus:outline-none focus:border-gold/40 placeholder-cream/20 min-w-0"
+                />
+                <button className="bg-gold text-luxury-black text-[9px] tracking-widest uppercase px-4 py-2.5 hover:bg-gold-light transition-colors shrink-0">
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom */}
+          <div className="border-t border-gold/8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-cream/20 text-[10px] tracking-widest uppercase">
               © {new Date().getFullYear()} Parfumerie Les 2 As. Tous droits réservés.
             </p>
-            <Link 
-              href="/admin/login" 
-              className="text-gray-800 hover:text-gold transition-colors mt-2 text-[8px] uppercase tracking-[0.4em] opacity-50 hover:opacity-100"
+
+            {/* Social */}
+            <div className="flex items-center gap-6">
+              <a href="#" aria-label="Instagram" className="text-cream/30 hover:text-gold transition-colors">
+                <InstagramIcon className="w-4 h-4" />
+              </a>
+              <a href="#" aria-label="Facebook" className="text-cream/30 hover:text-gold transition-colors">
+                <FacebookIcon className="w-4 h-4" />
+              </a>
+            </div>
+
+            <Link
+              href="/admin/login"
+              className="text-cream/10 hover:text-gold/40 text-[9px] uppercase tracking-[0.4em] transition-colors"
             >
-              ADMINISTRATEUR ?
+              Espace Admin
             </Link>
           </div>
         </div>

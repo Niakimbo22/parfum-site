@@ -3,7 +3,8 @@
 import Navbar from "@/components/Navbar";
 import { createClient } from "@/lib/supabase";
 import Link from "next/link";
-import { Search, Filter, SlidersHorizontal, Loader2 } from "lucide-react";
+import { Search, Filter, SlidersHorizontal, ArrowRight } from "lucide-react";
+import { InstagramIcon, FacebookIcon } from "@/components/SocialIcons";
 import { useState, useEffect } from "react";
 
 export default function CatalogPage() {
@@ -11,19 +12,15 @@ export default function CatalogPage() {
   const [loading, setLoading] = useState(true);
   const [activeFamily, setActiveFamily] = useState("Tous");
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const families = ["Tous", "Boisé", "Ambré Floral", "Oriental Boisé", "Floral", "Hespéridé"];
 
   useEffect(() => {
     async function fetchPerfumes() {
       setLoading(true);
       const supabase = createClient();
-      let query = supabase.from("perfumes").select("*");
-      
-      const { data, error } = await query;
-      if (!error && data) {
-        setPerfumes(data);
-      }
+      const { data, error } = await supabase.from("perfumes").select("*");
+      if (!error && data) setPerfumes(data);
       setLoading(false);
     }
     fetchPerfumes();
@@ -31,112 +28,167 @@ export default function CatalogPage() {
 
   const filteredPerfumes = perfumes.filter(p => {
     const matchesFamily = activeFamily === "Tous" || p.olfactory_family === activeFamily;
-    const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          p.brand?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.brand?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFamily && matchesSearch;
   });
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-luxury-black">
       <Navbar />
-      
-      <main className="flex-1 py-12 px-4 md:px-8">
+
+      <main className="flex-1 py-16 px-6 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <header className="mb-12 text-center">
-            <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Notre Collection</h1>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Explorez l'art de la haute parfumerie à travers nos créations exclusives. 
-              Chaque flacon renferme une histoire, une émotion, un voyage.
-            </p>
+
+          {/* Editorial header */}
+          <header className="mb-20">
+            <div className="eyebrow mb-5">Collection</div>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <h1 className="font-serif text-5xl md:text-6xl text-cream tracking-tight leading-none">
+                Notre <em className="not-italic text-gold italic">Catalogue</em>
+              </h1>
+              <p className="text-cream/40 max-w-xs text-sm leading-relaxed">
+                L'art de la haute parfumerie à travers nos créations exclusives.
+                Chaque flacon renferme une histoire, une émotion, un voyage.
+              </p>
+            </div>
+            <div className="mt-8 w-full h-px bg-gold/10"></div>
           </header>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar Filters */}
-            <aside className="lg:w-64 space-y-8">
-              <div>
-                <h3 className="text-gold uppercase tracking-widest text-xs font-bold mb-4 flex items-center gap-2">
-                  <Filter className="w-3 h-3" /> Familles Olfactives
-                </h3>
-                <div className="space-y-2">
-                  {families.map(f => (
-                    <button 
-                      key={f}
-                      onClick={() => setActiveFamily(f)}
-                      className={`block w-full text-left text-sm px-3 py-2 rounded-sm transition-colors ${activeFamily === f ? 'bg-gold/10 text-gold border border-gold/20' : 'text-gray-400 hover:text-white'}`}
-                    >
-                      {f}
-                    </button>
-                  ))}
-                </div>
-              </div>
+          <div className="flex flex-col lg:flex-row gap-12">
 
-              <div>
-                <h3 className="text-gold uppercase tracking-widest text-xs font-bold mb-4 flex items-center gap-2">
-                  <SlidersHorizontal className="w-3 h-3" /> Occasions
-                </h3>
-                <div className="space-y-2">
-                  {["Tous", "Quotidien", "Soirée", "Professionnel", "Vacances"].map(o => (
-                    <button key={o} className="block w-full text-left text-sm px-3 py-2 text-gray-400 hover:text-white transition-colors">
-                      {o}
-                    </button>
-                  ))}
+            {/* Sidebar Filters */}
+            <aside className="lg:w-56 shrink-0">
+              <div className="sticky top-32 space-y-10">
+
+                {/* Search */}
+                <div>
+                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-4">Recherche</p>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-cream/20" />
+                    <input
+                      type="text"
+                      placeholder="Nom, marque…"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full bg-luxury-charcoal border border-gold/10 text-cream text-xs pl-9 pr-4 py-2.5 focus:outline-none focus:border-gold/30 placeholder-cream/20 transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Famille */}
+                <div>
+                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-4 flex items-center gap-2">
+                    <Filter className="w-3 h-3" /> Familles
+                  </p>
+                  <div className="space-y-1">
+                    {families.map(f => (
+                      <button
+                        key={f}
+                        onClick={() => setActiveFamily(f)}
+                        className={`relative block w-full text-left text-xs px-4 py-2.5 transition-all duration-200 ${
+                          activeFamily === f
+                            ? "text-gold bg-gold/5"
+                            : "text-cream/40 hover:text-cream"
+                        }`}
+                      >
+                        {activeFamily === f && (
+                          <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-gold"></span>
+                        )}
+                        {f}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Occasions */}
+                <div>
+                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-4 flex items-center gap-2">
+                    <SlidersHorizontal className="w-3 h-3" /> Occasions
+                  </p>
+                  <div className="space-y-1">
+                    {["Tous", "Quotidien", "Soirée", "Professionnel", "Vacances"].map(o => (
+                      <button
+                        key={o}
+                        className="block w-full text-left text-xs px-4 py-2.5 text-cream/35 hover:text-cream transition-colors"
+                      >
+                        {o}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </aside>
 
             {/* Product Grid */}
             <div className="flex-1">
-              <div className="flex justify-between items-center mb-6">
-                <p className="text-gray-500 text-sm">
-                  {loading ? "Chargement..." : `${filteredPerfumes.length} parfums trouvés`}
+              <div className="flex justify-between items-center mb-8">
+                <p className="text-cream/30 text-xs tracking-widest uppercase">
+                  {loading ? "Chargement…" : `${filteredPerfumes.length} parfum${filteredPerfumes.length > 1 ? "s" : ""}`}
                 </p>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input 
-                    type="text" 
-                    placeholder="Rechercher..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-luxury-black border border-gold/10 text-white pl-10 pr-4 py-2 text-sm rounded-sm focus:outline-none focus:border-gold/50"
-                  />
-                </div>
               </div>
 
               {loading ? (
                 <div className="flex justify-center items-center h-64">
-                  <Loader2 className="w-8 h-8 text-gold animate-spin" />
+                  <div className="dot-loader flex items-center gap-2">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </div>
               ) : filteredPerfumes.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-                  {filteredPerfumes.map((perfume) => (
-                    <Link 
-                      href={`/parfum/${perfume.id}`} 
+                  {filteredPerfumes.map((perfume, idx) => (
+                    <Link
+                      href={`/parfum/${perfume.id}`}
                       key={perfume.id}
-                      className="group bg-luxury-black border border-gold/5 hover:border-gold/30 transition-all duration-500 overflow-hidden rounded-sm"
+                      className="group bg-luxury-charcoal hover:shadow-[0_8px_32px_0_rgba(201,169,97,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 block overflow-hidden stagger-item"
+                      style={{ animationDelay: `${idx * 0.06}s` }}
                     >
-                      <div className="aspect-[4/5] overflow-hidden relative">
-                        <img 
-                          src={perfume.image_url || "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80"} 
-                          alt={perfume.name} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                        />
-                        <div className="absolute inset-0 bg-luxury-black/20 group-hover:bg-transparent transition-colors"></div>
+                      {/* N° badge */}
+                      <div className="px-5 pt-4 flex justify-between items-center">
+                        <span className="text-[9px] tracking-[0.35em] text-cream/20 font-light font-oldstyle">
+                          N°{String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-[9px] tracking-[0.2em] uppercase text-gold/40">
+                          {perfume.olfactory_family || "Fragrance"}
+                        </span>
                       </div>
-                      <div className="p-6">
-                        <p className="text-gold text-[10px] uppercase tracking-[0.2em] mb-2">{perfume.olfactory_family || "Fragrance"}</p>
-                        <h3 className="text-xl font-serif text-white mb-1 group-hover:text-gold transition-colors">{perfume.name}</h3>
-                        <p className="text-gray-500 text-xs mb-4">{perfume.brand || "Les 2 As"}</p>
-                        <div className="flex justify-between items-center border-t border-gold/10 pt-4">
-                          <span className="text-white font-medium">{perfume.price} €</span>
-                          <span className="text-gold text-[10px] uppercase tracking-widest border border-gold/30 px-2 py-1 group-hover:bg-gold group-hover:text-luxury-black transition-all">Découvrir</span>
+
+                      {/* Image */}
+                      <div className="aspect-[4/5] overflow-hidden relative mt-2 mx-2">
+                        <img
+                          src={perfume.image_url || "/images/parfums/baccarat.png"}
+                          alt={perfume.name}
+                          className="w-full h-full object-contain bg-luxury-black p-6 transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-luxury-charcoal/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      </div>
+
+                      {/* Info */}
+                      <div className="p-5 pb-6">
+                        <h3 className="font-serif text-lg text-cream group-hover:text-gold transition-colors duration-300 mb-0.5 leading-snug">
+                          {perfume.name}
+                        </h3>
+                        <p className="text-cream/30 text-xs mb-4 tracking-wide">
+                          {perfume.brand || "Les 2 As"}
+                        </p>
+                        <div className="flex justify-between items-center pt-4 border-t border-gold/8">
+                          <span className="font-serif text-xl text-cream font-oldstyle">
+                            {perfume.price}<span className="text-xs text-cream/40 ml-1">€</span>
+                          </span>
+                          <span className="text-[9px] tracking-[0.3em] uppercase text-gold/50 group-hover:text-gold transition-colors flex items-center gap-1.5">
+                            Découvrir <ArrowRight className="w-3 h-3" />
+                          </span>
                         </div>
                       </div>
                     </Link>
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-24 border border-dashed border-gold/10 rounded-sm">
-                  <p className="text-gray-500 italic">Aucun parfum ne correspond à votre recherche.</p>
+                <div className="text-center py-28 border border-dashed border-gold/8">
+                  <p className="text-cream/25 italic text-sm">Aucun parfum ne correspond à votre recherche.</p>
                 </div>
               )}
             </div>
@@ -144,12 +196,65 @@ export default function CatalogPage() {
         </div>
       </main>
 
-      <footer className="bg-luxury-black border-t border-gold/10 py-12 px-4 mt-24">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="font-serif text-2xl gold-text font-bold tracking-widest mb-6 uppercase">Les 2 As</h2>
-          <p className="text-gray-600 text-xs tracking-widest">
-            © {new Date().getFullYear()} Parfumerie Les 2 As. L'excellence au service de vos sens.
-          </p>
+      {/* Footer */}
+      <footer className="bg-luxury-charcoal border-t border-gold/10 pt-20 pb-10 px-6 mt-24">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <div>
+              <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
+              <p className="text-cream/35 text-sm leading-relaxed">
+                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Boutique</h4>
+              <ul className="space-y-3">
+                {["Catalogue", "Nouveautés", "Bestsellers", "Coffrets"].map(l => (
+                  <li key={l}>
+                    <Link href="/catalogue" className="text-cream/40 hover:text-cream text-sm transition-colors">{l}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Contact</h4>
+              <ul className="space-y-3 text-sm text-cream/40">
+                <li>123 Avenue des Champs-Élysées</li>
+                <li>75008 Paris, France</li>
+                <li><a href="mailto:contact@les2as.fr" className="hover:text-cream transition-colors">contact@les2as.fr</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Newsletter</h4>
+              <p className="text-cream/35 text-xs mb-4 leading-relaxed">Recevez nos nouvelles parutions et offres exclusives.</p>
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="votre@email.fr"
+                  className="flex-1 bg-luxury-black border border-gold/15 text-cream text-xs px-4 py-2.5 focus:outline-none focus:border-gold/40 placeholder-cream/20 min-w-0"
+                />
+                <button className="bg-gold text-luxury-black text-[9px] tracking-widest uppercase px-4 py-2.5 hover:bg-gold-light transition-colors shrink-0">
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gold/8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-cream/20 text-[10px] tracking-widest uppercase">
+              © {new Date().getFullYear()} Parfumerie Les 2 As. Tous droits réservés.
+            </p>
+            <div className="flex items-center gap-6">
+              <a href="#" aria-label="Instagram" className="text-cream/30 hover:text-gold transition-colors">
+                <InstagramIcon className="w-4 h-4" />
+              </a>
+              <a href="#" aria-label="Facebook" className="text-cream/30 hover:text-gold transition-colors">
+                <FacebookIcon className="w-4 h-4" />
+              </a>
+            </div>
+            <Link href="/admin/login" className="text-cream/10 hover:text-gold/40 text-[9px] uppercase tracking-[0.4em] transition-colors">
+              Espace Admin
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

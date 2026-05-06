@@ -97,18 +97,18 @@ export default function CommandeForm({ perfumes }: Props) {
 
   if (success) {
     return (
-      <div className="text-center py-20">
-        <div className="flex justify-center mb-6">
-          <div className="p-6 bg-green-500/10 rounded-full">
-            <CheckCircle className="w-16 h-16 text-green-400" />
+      <div className="text-center py-28">
+        <div className="flex justify-center mb-8">
+          <div className="w-20 h-20 border border-gold/30 flex items-center justify-center">
+            <CheckCircle className="w-10 h-10 text-gold" />
           </div>
         </div>
-        <h2 className="text-3xl font-serif text-white mb-3">Commande envoyée !</h2>
-        <p className="text-gray-400 max-w-md mx-auto mb-8">
+        <h2 className="font-serif text-4xl text-cream mb-3 tracking-tight">Commande envoyée</h2>
+        <p className="text-cream/40 max-w-md mx-auto mb-10 text-sm leading-relaxed">
           Merci pour votre commande. Nous vous contacterons à{" "}
           <span className="text-gold">{customerEmail}</span> pour confirmer et organiser la livraison.
         </p>
-        <a href="/catalogue" className="gold-button inline-flex items-center gap-2 px-8 py-4">
+        <a href="/catalogue" className="gold-button inline-flex items-center gap-2 px-10 py-4">
           Retour au catalogue
         </a>
       </div>
@@ -119,15 +119,15 @@ export default function CommandeForm({ perfumes }: Props) {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Left: Articles */}
       <div className="space-y-6">
-        <div className="bg-luxury-black border border-gold/10 rounded-sm p-6">
-          <h2 className="text-lg font-serif text-white mb-4">Vos articles</h2>
+        <div className="bg-luxury-charcoal border border-gold/8 p-6">
+          <h2 className="font-serif text-lg text-cream mb-6">Vos articles</h2>
 
           {/* Add item */}
           <div className="flex gap-2 mb-6">
             <select
               value={selectedPerfumeId}
               onChange={(e) => setSelectedPerfumeId(e.target.value)}
-              className="flex-1 bg-slate-900 border border-gold/20 text-white px-3 py-2 rounded-sm text-sm focus:outline-none focus:border-gold/50"
+              className="flex-1 bg-luxury-black border border-gold/15 text-cream px-3 py-2 text-sm focus:outline-none focus:border-gold/40"
             >
               {perfumes.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -139,7 +139,7 @@ export default function CommandeForm({ perfumes }: Props) {
               type="button"
               onClick={addItem}
               disabled={!selectedPerfumeId}
-              className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 rounded-sm text-sm hover:bg-gold/20 transition-colors disabled:opacity-40 flex items-center gap-1.5"
+              className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 text-sm hover:bg-gold/20 transition-colors disabled:opacity-40 flex items-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
               Ajouter
@@ -148,20 +148,20 @@ export default function CommandeForm({ perfumes }: Props) {
 
           {/* Items list */}
           {items.length === 0 ? (
-            <div className="text-center py-10 border border-dashed border-gold/10 rounded-sm">
-              <ShoppingBag className="w-8 h-8 text-gray-700 mx-auto mb-2" />
-              <p className="text-gray-600 text-sm">Aucun article ajouté</p>
+            <div className="text-center py-10 border border-dashed border-gold/8">
+              <ShoppingBag className="w-8 h-8 text-cream/20 mx-auto mb-2" />
+              <p className="text-cream/30 text-sm">Aucun article ajouté</p>
             </div>
           ) : (
             <div className="space-y-3">
               {items.map((item) => (
                 <div
                   key={item.perfume_id}
-                  className="flex items-center justify-between p-3 bg-white/5 border border-gold/5 rounded-sm"
+                  className="flex items-center justify-between p-3 bg-luxury-black/50 border border-gold/6"
                 >
                   <div className="flex-1">
-                    <p className="text-white text-sm font-medium">{item.name}</p>
-                    <p className="text-gray-500 text-xs">{item.unit_price}€ / unité</p>
+                    <p className="text-cream text-sm font-medium">{item.name}</p>
+                    <p className="text-cream/35 text-xs">{item.unit_price}€ / unité</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
@@ -195,34 +195,34 @@ export default function CommandeForm({ perfumes }: Props) {
 
               {/* Total */}
               <div className="flex justify-between items-center pt-3 border-t border-gold/10">
-                <span className="text-gray-400 text-sm font-medium uppercase tracking-widest text-xs">Total</span>
-                <span className="text-2xl font-serif text-gold">{total.toFixed(2)}€</span>
+                <span className="text-[10px] uppercase tracking-widest text-cream/30">Total</span>
+                <span className="font-serif text-2xl text-gold font-oldstyle">{total.toFixed(2)}€</span>
               </div>
             </div>
           )}
         </div>
 
         {/* Notes */}
-        <div className="bg-luxury-black border border-gold/10 rounded-sm p-6">
-          <h2 className="text-lg font-serif text-white mb-4">Notes (optionnel)</h2>
+        <div className="bg-luxury-charcoal border border-gold/8 p-6">
+          <h2 className="font-serif text-lg text-cream mb-4">Notes (optionnel)</h2>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Instructions spéciales, message cadeau..."
             rows={3}
             maxLength={500}
-            className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-2 rounded-sm text-sm focus:outline-none focus:border-gold/50 resize-none placeholder-gray-600"
+            className="w-full bg-luxury-black border border-gold/15 text-cream px-3 py-2 text-sm focus:outline-none focus:border-gold/40 resize-none placeholder-cream/20"
           />
         </div>
       </div>
 
       {/* Right: Customer info + Submit */}
       <div className="space-y-6">
-        <div className="bg-luxury-black border border-gold/10 rounded-sm p-6">
-          <h2 className="text-lg font-serif text-white mb-4">Vos coordonnées</h2>
+        <div className="bg-luxury-charcoal border border-gold/8 p-6">
+          <h2 className="font-serif text-lg text-cream mb-6">Vos coordonnées</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-1.5">
+              <label className="block text-[9px] uppercase tracking-[0.4em] text-gold/50 mb-1.5">
                 Nom complet *
               </label>
               <input
@@ -231,11 +231,11 @@ export default function CommandeForm({ perfumes }: Props) {
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="Jean Dupont"
-                className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-2.5 rounded-sm text-sm focus:outline-none focus:border-gold/50 placeholder-gray-600"
+                className="w-full bg-luxury-black border border-gold/15 text-cream px-3 py-2.5 text-sm focus:outline-none focus:border-gold/40 placeholder-cream/20"
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-1.5">
+              <label className="block text-[9px] uppercase tracking-[0.4em] text-gold/50 mb-1.5">
                 Email *
               </label>
               <input
@@ -244,11 +244,11 @@ export default function CommandeForm({ perfumes }: Props) {
                 value={customerEmail}
                 onChange={(e) => setCustomerEmail(e.target.value)}
                 placeholder="jean@example.com"
-                className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-2.5 rounded-sm text-sm focus:outline-none focus:border-gold/50 placeholder-gray-600"
+                className="w-full bg-luxury-black border border-gold/15 text-cream px-3 py-2.5 text-sm focus:outline-none focus:border-gold/40 placeholder-cream/20"
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-1.5">
+              <label className="block text-[9px] uppercase tracking-[0.4em] text-gold/50 mb-1.5">
                 Téléphone
               </label>
               <input
@@ -256,11 +256,11 @@ export default function CommandeForm({ perfumes }: Props) {
                 value={customerPhone}
                 onChange={(e) => setCustomerPhone(e.target.value)}
                 placeholder="+33 6 00 00 00 00"
-                className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-2.5 rounded-sm text-sm focus:outline-none focus:border-gold/50 placeholder-gray-600"
+                className="w-full bg-luxury-black border border-gold/15 text-cream px-3 py-2.5 text-sm focus:outline-none focus:border-gold/40 placeholder-cream/20"
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-1.5">
+              <label className="block text-[9px] uppercase tracking-[0.4em] text-gold/50 mb-1.5">
                 Adresse de livraison *
               </label>
               <textarea
@@ -269,26 +269,26 @@ export default function CommandeForm({ perfumes }: Props) {
                 onChange={(e) => setCustomerAddress(e.target.value)}
                 placeholder={"12 rue de la Paix\n75001 Paris\nFrance"}
                 rows={3}
-                className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-2.5 rounded-sm text-sm focus:outline-none focus:border-gold/50 resize-none placeholder-gray-600"
+                className="w-full bg-luxury-black border border-gold/15 text-cream px-3 py-2.5 text-sm focus:outline-none focus:border-gold/40 resize-none placeholder-cream/20"
               />
             </div>
           </div>
         </div>
 
         {/* Order summary + submit */}
-        <div className="bg-luxury-black border border-gold/10 rounded-sm p-6">
+        <div className="bg-luxury-charcoal border border-gold/8 p-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-400 text-sm">
+            <span className="text-cream/40 text-sm">
               {items.length} article{items.length > 1 ? "s" : ""}
             </span>
-            <span className="text-2xl font-serif text-gold">{total.toFixed(2)}€</span>
+            <span className="font-serif text-2xl text-gold font-oldstyle">{total.toFixed(2)}€</span>
           </div>
-          <p className="text-gray-600 text-xs mb-6">
+          <p className="text-cream/25 text-xs mb-6">
             Livraison gratuite en France. Nous vous contacterons pour confirmer.
           </p>
 
           {error && (
-            <p className="text-red-400 text-sm mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-sm">
+            <p className="text-red-400 text-sm mb-4 p-3 bg-red-500/10 border border-red-500/20">
               {error}
             </p>
           )}
@@ -296,12 +296,12 @@ export default function CommandeForm({ perfumes }: Props) {
           <button
             type="submit"
             disabled={isPending || items.length === 0}
-            className="gold-button w-full flex items-center justify-center gap-3 py-4 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="gold-button w-full flex items-center justify-center gap-3 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isPending ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4" />
             )}
             {isPending ? "Envoi en cours..." : "Passer la commande"}
           </button>

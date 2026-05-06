@@ -1,34 +1,47 @@
 import Link from 'next/link'
-import { ShoppingBag, User } from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 
 export default function Navbar() {
   return (
-    <nav className="border-b border-gold/20 bg-luxury-black/50 backdrop-blur-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
+    <nav className="border-b border-gold/10 bg-luxury-black/80 backdrop-blur-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between h-24 items-center">
+
+          {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="font-serif text-2xl gold-text font-bold tracking-widest">
-              LES 2 AS
+            <Link href="/" className="flex items-center gap-1 group">
+              <span className="font-serif text-xl tracking-[0.25em] text-cream uppercase">LES</span>
+              <span className="text-gold text-2xl font-light mx-1">·</span>
+              <span className="font-serif text-xl tracking-[0.25em] text-cream uppercase">2</span>
+              <span className="text-gold text-2xl font-light mx-1">·</span>
+              <span className="font-serif text-xl tracking-[0.25em] text-cream uppercase">AS</span>
             </Link>
           </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <Link href="/catalogue" className="text-gray-300 hover:text-gold px-3 py-2 text-sm font-medium tracking-widest uppercase transition-colors">
-                Catalogue
-              </Link>
-              <Link href="/a-propos" className="text-gray-300 hover:text-gold px-3 py-2 text-sm font-medium tracking-widest uppercase transition-colors">
-                La Maison
-              </Link>
-              <Link href="/contact" className="text-gray-300 hover:text-gold px-3 py-2 text-sm font-medium tracking-widest uppercase transition-colors">
-                Contact
-              </Link>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link href="/cart" className="text-gray-300 hover:text-gold transition-colors">
-              <ShoppingBag className="w-6 h-6" />
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center space-x-10">
+            <Link href="/catalogue" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
+              Catalogue
+            </Link>
+            <Link href="/a-propos" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
+              La Maison
+            </Link>
+            <Link href="/contact" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
+              Contact
             </Link>
           </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-6">
+            <Link href="/commande" className="hidden sm:flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-cream/60 hover:text-gold transition-colors duration-300">
+              Commander
+            </Link>
+            <Link href="/commande" className="relative text-cream/60 hover:text-gold transition-colors duration-300 group">
+              <ShoppingBag className="w-5 h-5" />
+              <span className="absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+            </Link>
+          </div>
+
         </div>
       </div>
     </nav>
