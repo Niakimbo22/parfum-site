@@ -182,7 +182,7 @@ export default function LogsClient({ initialLogs }: Props) {
                   </td>
                   <td className="px-6 py-4 text-white font-medium">
                     <div className="flex items-center gap-2">
-                      {log.permanent && <Lock className="w-3 h-3 text-yellow-500 shrink-0" title="Entrée permanente" />}
+                      {log.permanent && <div title="Entrée permanente"><Lock className="w-3 h-3 text-yellow-500 shrink-0" /></div>}
                       {log.action}
                     </div>
                   </td>
