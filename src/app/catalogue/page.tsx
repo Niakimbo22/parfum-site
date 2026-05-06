@@ -3,17 +3,51 @@
 import Navbar from "@/components/Navbar";
 import { createClient } from "@/lib/supabase";
 import Link from "next/link";
-import { Search, Filter, SlidersHorizontal, ArrowRight } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Search, Filter, SlidersHorizontal, ArrowRight, User2 } from "lucide-react";
 import { InstagramIcon, FacebookIcon } from "@/components/SocialIcons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
-export default function CatalogPage() {
+const GENDERS = ["Tous", "Homme", "Femme", "Mixte"] as const;
+type Gender = typeof GENDERS[number];
+
+const GENDER_META: Record<Gender, { title: string; eyebrow: string; tag: string }> = {
+  Tous:  { title: "Catalogue", eyebrow: "Collection",         tag: "Tous nos parfums" },
+  Homme: { title: "Homme",     eyebrow: "Pour Lui",           tag: "Puissance & Élégance" },
+  Femme: { title: "Femme",     eyebrow: "Pour Elle",          tag: "Grâce & Mystère" },
+  Mixte: { title: "Unisexe",   eyebrow: "Audace & Harmonie",  tag: "Fragrances mixtes" },
+};
+
+function CatalogContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const urlGender = searchParams.get("gender");
+  const initialGender: Gender = (GENDERS as readonly string[]).includes(urlGender ?? "")
+    ? (urlGender as Gender)
+    : "Tous";
+
   const [perfumes, setPerfumes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFamily, setActiveFamily] = useState("Tous");
+  const [activeGender, setActiveGender] = useState<Gender>(initialGender);
   const [searchTerm, setSearchTerm] = useState("");
 
   const families = ["Tous", "Boisé", "Ambré Floral", "Oriental Boisé", "Floral", "Hespéridé"];
+
+  // Sync state when URL changes (e.g. clicking nav links)
+  useEffect(() => {
+    const g = searchParams.get("gender");
+    setActiveGender((GENDERS as readonly string[]).includes(g ?? "") ? (g as Gender) : "Tous");
+  }, [searchParams]);
+
+  const updateGender = (g: Gender) => {
+    setActiveGender(g);
+    const params = new URLSearchParams(searchParams.toString());
+    if (g === "Tous") params.delete("gender");
+    else params.set("gender", g);
+    const qs = params.toString();
+    router.replace(qs ? `/catalogue?${qs}` : "/catalogue", { scroll: false });
+  };
 
   useEffect(() => {
     async function fetchPerfumes() {
@@ -28,11 +62,14 @@ export default function CatalogPage() {
 
   const filteredPerfumes = perfumes.filter(p => {
     const matchesFamily = activeFamily === "Tous" || p.olfactory_family === activeFamily;
+    const matchesGender = activeGender === "Tous" || p.gender === activeGender;
     const matchesSearch =
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.brand?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFamily && matchesSearch;
+    return matchesFamily && matchesGender && matchesSearch;
   });
+
+  const meta = GENDER_META[activeGender];
 
   return (
     <div className="min-h-screen flex flex-col bg-luxury-black">
@@ -43,14 +80,19 @@ export default function CatalogPage() {
 
           {/* Editorial header */}
           <header className="mb-20">
-            <div className="eyebrow mb-5">Collection</div>
+            <div className="eyebrow mb-5">{meta.eyebrow}</div>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <h1 className="font-serif text-5xl md:text-6xl text-cream tracking-tight leading-none">
-                Notre <em className="not-italic text-gold italic">Catalogue</em>
+                {activeGender === "Tous" ? (
+                  <>Notre <em className="not-italic text-gold italic">Catalogue</em></>
+                ) : (
+                  <>Collection <em className="not-italic text-gold italic">{meta.title}</em></>
+                )}
               </h1>
               <p className="text-cream/40 max-w-xs text-sm leading-relaxed">
-                L'art de la haute parfumerie à travers nos créations exclusives.
-                Chaque flacon renferme une histoire, une émotion, un voyage.
+                {activeGender === "Tous"
+                  ? "L'art de la haute parfumerie à travers nos créations exclusives. Chaque flacon renferme une histoire, une émotion, un voyage."
+                  : `${meta.tag}. Une sélection de fragrances choisies pour sublimer votre présence.`}
               </p>
             </div>
             <div className="mt-8 w-full h-px bg-gold/10"></div>
@@ -74,6 +116,31 @@ export default function CatalogPage() {
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="w-full bg-luxury-charcoal border border-gold/10 text-cream text-xs pl-9 pr-4 py-2.5 focus:outline-none focus:border-gold/30 placeholder-cream/20 transition-colors"
                     />
+                  </div>
+                </div>
+
+                {/* Genre */}
+                <div>
+                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-4 flex items-center gap-2">
+                    <User2 className="w-3 h-3" /> Genre
+                  </p>
+                  <div className="space-y-1">
+                    {GENDERS.map(g => (
+                      <button
+                        key={g}
+                        onClick={() => updateGender(g)}
+                        className={`relative block w-full text-left text-xs px-4 py-2.5 transition-all duration-200 ${
+                          activeGender === g
+                            ? "text-gold bg-gold/5"
+                            : "text-cream/40 hover:text-cream"
+                        }`}
+                      >
+                        {activeGender === g && (
+                          <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-gold"></span>
+                        )}
+                        {g === "Mixte" ? "Unisexe" : g}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -258,5 +325,23 @@ export default function CatalogPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function CatalogPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-luxury-black flex items-center justify-center">
+          <div className="dot-loader flex items-center gap-2">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      }
+    >
+      <CatalogContent />
+    </Suspense>
   );
 }

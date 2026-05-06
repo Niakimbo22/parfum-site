@@ -23,6 +23,12 @@ export default function Navbar() {
             <Link href="/catalogue" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
               Catalogue
             </Link>
+            <Link href="/catalogue?gender=Homme" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
+              Homme
+            </Link>
+            <Link href="/catalogue?gender=Femme" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
+              Femme
+            </Link>
             <Link href="/a-propos" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
               La Maison
             </Link>

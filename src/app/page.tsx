@@ -14,21 +14,21 @@ const FEATURED = [
     title: "Pour Lui",
     desc: "Puissance & Élégance",
     img: "/images/parfums/dior-sauvage.png",
-    href: "/catalogue",
+    href: "/catalogue?gender=Homme",
   },
   {
     num: "02",
     title: "Pour Elle",
     desc: "Grâce & Mystère",
     img: "/images/parfums/chanel-n5.png",
-    href: "/catalogue",
+    href: "/catalogue?gender=Femme",
   },
   {
     num: "03",
     title: "Unisexe",
     desc: "Audace & Harmonie",
     img: "/images/parfums/baccarat.png",
-    href: "/catalogue",
+    href: "/catalogue?gender=Mixte",
   },
 ];
 
