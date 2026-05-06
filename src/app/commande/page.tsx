@@ -12,7 +12,8 @@ export default async function CommandePage() {
     .select("id, name, brand, price, stock")
     .order("name");
 
-  const available = (perfumes ?? []).filter((p) => p.stock > 0);
+  // Show all perfumes (stock check not required at order time — admin manages availability)
+  const available = perfumes ?? [];
 
   return (
     <div className="min-h-screen flex flex-col">

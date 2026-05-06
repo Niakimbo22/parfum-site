@@ -130,15 +130,15 @@ export default function CommandeForm({ perfumes }: Props) {
               className="flex-1 bg-slate-900 border border-gold/20 text-white px-3 py-2 rounded-sm text-sm focus:outline-none focus:border-gold/50"
             >
               {perfumes.map((p) => (
-                <option key={p.id} value={p.id} disabled={p.stock === 0}>
-                  {p.name} — {p.price}€{p.stock === 0 ? " (épuisé)" : ""}
+                <option key={p.id} value={p.id}>
+                  {p.name}{p.brand ? ` — ${p.brand}` : ""}{p.price > 0 ? ` — ${p.price}€` : ""}
                 </option>
               ))}
             </select>
             <button
               type="button"
               onClick={addItem}
-              disabled={!selectedPerfumeId || perfumes.find((p) => p.id === selectedPerfumeId)?.stock === 0}
+              disabled={!selectedPerfumeId}
               className="px-4 py-2 bg-gold/10 text-gold border border-gold/20 rounded-sm text-sm hover:bg-gold/20 transition-colors disabled:opacity-40 flex items-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
