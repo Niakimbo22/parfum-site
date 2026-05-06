@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   LayoutDashboard,
   Package,
-  ShoppingCart,
   LogOut,
   FileUp,
   History,
@@ -69,10 +68,6 @@ export default async function AdminLayout({
           <Link href="/admin/parfums" className="flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors text-sm">
             <Package className="w-4 h-4 text-gold" />
             Parfums
-          </Link>
-          <Link href="/admin/commandes" className="flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors text-sm">
-            <ShoppingCart className="w-4 h-4 text-gold" />
-            Commandes
           </Link>
           <Link href="/admin/import" className="flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors text-sm">
             <FileUp className="w-4 h-4 text-gold" />
