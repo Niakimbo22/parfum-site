@@ -1,12 +1,11 @@
 import { getSession } from "@/lib/auth";
-import { MOCK_PERFUMES, MOCK_ORDERS } from "@/lib/data";
-import { Package, ShoppingBag, AlertTriangle } from "lucide-react";
+import { MOCK_PERFUMES } from "@/lib/data";
+import { Package, AlertTriangle } from "lucide-react";
 
 export default async function AdminDashboard() {
   const session = await getSession();
   
   const totalPerfumes = MOCK_PERFUMES.length;
-  const totalOrders = MOCK_ORDERS.length;
   const lowStockCount = MOCK_PERFUMES.filter(p => p.stock < 5).length;
 
   const adminName = session?.adminName;
@@ -35,7 +34,7 @@ export default async function AdminDashboard() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-luxury-black border border-gold/10 p-6 rounded-sm">
           <div className="flex items-center gap-4 mb-4">
             <div className="p-3 bg-gold/10 rounded-full">
@@ -44,18 +43,6 @@ export default async function AdminDashboard() {
             <div>
               <p className="text-gray-500 text-xs uppercase tracking-widest">Parfums</p>
               <p className="text-2xl font-serif text-white">{totalPerfumes}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-luxury-black border border-gold/10 p-6 rounded-sm">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-gold/10 rounded-full">
-              <ShoppingBag className="w-6 h-6 text-gold" />
-            </div>
-            <div>
-              <p className="text-gray-500 text-xs uppercase tracking-widest">Commandes</p>
-              <p className="text-2xl font-serif text-white">{totalOrders}</p>
             </div>
           </div>
         </div>
