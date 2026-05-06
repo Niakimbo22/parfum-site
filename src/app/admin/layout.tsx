@@ -9,7 +9,8 @@ import {
   History,
   MessageSquare,
   Globe,
-  Trash2
+  Trash2,
+  ShoppingBag,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -81,6 +82,10 @@ export default async function AdminLayout({
           <Link href="/admin/chat" className="flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors text-sm">
             <MessageSquare className="w-4 h-4 text-gold" />
             Chat
+          </Link>
+          <Link href="/admin/commandes" className="flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors text-sm">
+            <ShoppingBag className="w-4 h-4 text-gold" />
+            Commandes
           </Link>
           <Link href="/admin/trash" className="flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors text-sm">
             <Trash2 className="w-4 h-4 text-gold" />

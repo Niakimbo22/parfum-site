@@ -2,7 +2,7 @@
 
 import { RotateCcw, Trash2, Search } from "lucide-react";
 import { useState, useTransition } from "react";
-import { restoreFromTrash, emptyTrash } from "../parfums/actions";
+import { restoreFromTrash, emptyTrash } from "./actions";
 
 interface TrashItem {
   id: string;
@@ -95,7 +95,12 @@ export default function TrashClient({ items }: Props) {
                   <td className="px-6 py-4">
                     <span className="text-gray-400 font-medium capitalize">{item.type}</span>
                   </td>
-                  <td className="px-6 py-4 text-white font-medium">{item.data.name || "—"}</td>
+                  <td className="px-6 py-4 text-white font-medium">
+                    {item.data.name || item.data.order_number || "—"}
+                    {item.data.customer_name && (
+                      <span className="text-gray-500 text-xs block">{item.data.customer_name}</span>
+                    )}
+                  </td>
                   <td className="px-6 py-4 text-gray-500">{item.deleted_by}</td>
                   <td className="px-6 py-4 text-gray-500 text-xs">
                     {new Date(item.created_at).toLocaleString("fr-FR")}

@@ -1,12 +1,20 @@
 import { getSession } from "@/lib/auth";
-import { MOCK_PERFUMES } from "@/lib/data";
-import { Package, AlertTriangle } from "lucide-react";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+import { Package, AlertTriangle, ShoppingBag, Clock } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   const session = await getSession();
-  
-  const totalPerfumes = MOCK_PERFUMES.length;
-  const lowStockCount = MOCK_PERFUMES.filter(p => p.stock < 5).length;
+
+  // Fetch real stats from Supabase
+  const [{ count: totalPerfumes }, { count: lowStockCount }, { count: totalCommandes }, { count: pendingCommandes }] =
+    await Promise.all([
+      supabaseAdmin().from("perfumes").select("*", { count: "exact", head: true }),
+      supabaseAdmin().from("perfumes").select("*", { count: "exact", head: true }).lt("stock", 5),
+      supabaseAdmin().from("commandes").select("*", { count: "exact", head: true }),
+      supabaseAdmin().from("commandes").select("*", { count: "exact", head: true }).eq("status", "pending"),
+    ]);
 
   const adminName = session?.adminName;
 
@@ -34,7 +42,7 @@ export default async function AdminDashboard() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="bg-luxury-black border border-gold/10 p-6 rounded-sm">
           <div className="flex items-center gap-4 mb-4">
             <div className="p-3 bg-gold/10 rounded-full">
@@ -42,7 +50,7 @@ export default async function AdminDashboard() {
             </div>
             <div>
               <p className="text-gray-500 text-xs uppercase tracking-widest">Parfums</p>
-              <p className="text-2xl font-serif text-white">{totalPerfumes}</p>
+              <p className="text-2xl font-serif text-white">{totalPerfumes ?? "—"}</p>
             </div>
           </div>
         </div>
@@ -54,7 +62,31 @@ export default async function AdminDashboard() {
             </div>
             <div>
               <p className="text-gray-500 text-xs uppercase tracking-widest">Stock Faible</p>
-              <p className="text-2xl font-serif text-white">{lowStockCount}</p>
+              <p className="text-2xl font-serif text-white">{lowStockCount ?? "—"}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-luxury-black border border-gold/10 p-6 rounded-sm">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 bg-blue-500/10 rounded-full">
+              <ShoppingBag className="w-6 h-6 text-blue-400" />
+            </div>
+            <div>
+              <p className="text-gray-500 text-xs uppercase tracking-widest">Commandes</p>
+              <p className="text-2xl font-serif text-white">{totalCommandes ?? "—"}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-luxury-black border border-yellow-500/10 p-6 rounded-sm">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 bg-yellow-500/10 rounded-full">
+              <Clock className="w-6 h-6 text-yellow-400" />
+            </div>
+            <div>
+              <p className="text-gray-500 text-xs uppercase tracking-widest">En attente</p>
+              <p className="text-2xl font-serif text-yellow-400">{pendingCommandes ?? "—"}</p>
             </div>
           </div>
         </div>
@@ -62,26 +94,24 @@ export default async function AdminDashboard() {
 
       <div className="bg-luxury-black border border-gold/10 rounded-sm overflow-hidden">
         <div className="p-4 border-b border-gold/10 flex justify-between items-center">
-          <h2 className="text-lg font-serif text-white">Activités récentes</h2>
+          <h2 className="text-lg font-serif text-white">Liens rapides</h2>
         </div>
-        <div className="divide-y divide-gold/5">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gold/5">
           {[
-            { admin: "Nico", action: "Modifié stock 'Bois d'Argent'", time: "Il y a 10 min" },
-            { admin: "Luca", action: "Ajouté nouveau parfum 'Soleil Blanc'", time: "Il y a 2h" },
-            { admin: "Nico", action: "Validé commande CMD-2AS-001", time: "Hier" }
-          ].map((log, i) => (
-            <div key={i} className="p-4 flex justify-between items-center text-sm">
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xs font-bold">
-                  {log.admin[0]}
-                </span>
-                <div>
-                  <p className="text-white font-medium">{log.action}</p>
-                  <p className="text-gray-500 text-xs">{log.admin}</p>
-                </div>
-              </div>
-              <span className="text-gray-600 text-xs italic">{log.time}</span>
-            </div>
+            { href: "/admin/parfums", label: "Gérer les parfums", icon: "📦" },
+            { href: "/admin/commandes", label: "Voir les commandes", icon: "🛍️" },
+            { href: "/commande", label: "Formulaire client", icon: "🌐", target: "_blank" },
+            { href: "/admin/logs", label: "Logs d'activité", icon: "📋" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target={link.target}
+              className="p-6 hover:bg-gold/5 transition-colors text-center group"
+            >
+              <div className="text-2xl mb-2">{link.icon}</div>
+              <p className="text-gray-400 text-xs group-hover:text-gold transition-colors">{link.label}</p>
+            </a>
           ))}
         </div>
       </div>
