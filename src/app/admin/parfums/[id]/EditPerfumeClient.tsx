@@ -89,7 +89,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 name="name"
                 defaultValue={perfume.name}
                 required
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
               />
             </div>
             <div className="space-y-2">
@@ -98,7 +98,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 type="text"
                 name="brand"
                 defaultValue={perfume.brand || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
               />
             </div>
             <div className="md:col-span-2 space-y-2">
@@ -107,7 +107,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 name="description"
                 rows={4}
                 defaultValue={perfume.description || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 resize-none"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 resize-none"
               />
             </div>
             <div className="space-y-2">
@@ -116,7 +116,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 type="text"
                 name="image_url"
                 defaultValue={perfume.image_url || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
               />
             </div>
             <div className="space-y-2">
@@ -127,7 +127,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 step="0.01"
                 defaultValue={perfume.price}
                 required
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
               />
             </div>
             <div className="space-y-2">
@@ -137,7 +137,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 name="stock"
                 defaultValue={perfume.stock}
                 required
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
               <select
                 name="olfactory_family"
                 defaultValue={perfume.olfactory_family || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 appearance-none"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 appearance-none"
               >
                 <option value="">Sélectionner...</option>
                 <option value="Floral">Floral</option>
@@ -168,7 +168,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
               <select
                 name="occasion"
                 defaultValue={perfume.occasion || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 appearance-none"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 appearance-none"
               >
                 <option value="">Sélectionner...</option>
                 <option value="Quotidien">Quotidien</option>
@@ -182,7 +182,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
               <select
                 name="season"
                 defaultValue={perfume.season || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 appearance-none"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 appearance-none"
               >
                 <option value="">Sélectionner...</option>
                 <option value="Printemps">Printemps</option>
@@ -204,7 +204,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 type="text"
                 name="top_notes"
                 defaultValue={perfume.top_notes || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
                 placeholder="Séparez par des virgules"
               />
             </div>
@@ -214,7 +214,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 type="text"
                 name="middle_notes"
                 defaultValue={perfume.middle_notes || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
                 placeholder="Séparez par des virgules"
               />
             </div>
@@ -224,7 +224,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
                 type="text"
                 name="base_notes"
                 defaultValue={perfume.base_notes || ""}
-                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50"
+                className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
                 placeholder="Séparez par des virgules"
               />
             </div>

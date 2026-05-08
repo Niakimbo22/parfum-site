@@ -230,8 +230,8 @@ export default function CommandesClient({ commandes: initialCommandes }: Props) 
           </div>
         </div>
 
-        {/* Table */}
-        <div className="overflow-x-auto">
+        {/* Desktop table */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-gold/10 text-[10px] uppercase tracking-widest text-gray-500">
@@ -358,7 +358,6 @@ export default function CommandesClient({ commandes: initialCommandes }: Props) 
 
                             {/* Status change + Notes */}
                             <div className="space-y-4">
-                              {/* Status selector */}
                               <div>
                                 <h4 className="text-[10px] uppercase tracking-widest text-gray-500 mb-3">Modifier le statut</h4>
                                 <select
@@ -375,7 +374,6 @@ export default function CommandesClient({ commandes: initialCommandes }: Props) 
                                 </select>
                               </div>
 
-                              {/* Notes */}
                               <div>
                                 <h4 className="text-[10px] uppercase tracking-widest text-gray-500 mb-2 flex items-center gap-1">
                                   <StickyNote className="w-3 h-3" /> Notes internes
@@ -428,14 +426,181 @@ export default function CommandesClient({ commandes: initialCommandes }: Props) 
               })}
             </tbody>
           </table>
+          {filtered.length === 0 && (
+            <div className="text-center py-20 border-t border-gold/10">
+              <Package className="w-12 h-12 text-gray-700 mx-auto mb-4" />
+              <p className="text-gray-500 italic">Aucune commande trouvée.</p>
+            </div>
+          )}
         </div>
 
-        {filtered.length === 0 && (
-          <div className="text-center py-20 border-t border-gold/10">
-            <Package className="w-12 h-12 text-gray-700 mx-auto mb-4" />
-            <p className="text-gray-500 italic">Aucune commande trouvée.</p>
-          </div>
-        )}
+        {/* Mobile cards */}
+        <div className="lg:hidden">
+          {filtered.length === 0 ? (
+            <div className="text-center py-16">
+              <Package className="w-10 h-10 text-gray-700 mx-auto mb-3" />
+              <p className="text-gray-500 italic">Aucune commande trouvée.</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-gold/5">
+              {filtered.map((commande) => {
+                const cfg = STATUS_CONFIG[commande.status];
+                const isExpanded = expandedId === commande.id;
+                const items: CommandeItem[] = Array.isArray(commande.items) ? commande.items : [];
+
+                return (
+                  <div key={commande.id} className="p-4">
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => setExpandedId(isExpanded ? null : commande.id)}
+                    >
+                      <div className="flex justify-between items-start mb-2">
+                        <span className="font-mono text-gold text-xs">{commande.order_number}</span>
+                        <span className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${cfg.color}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+                          {cfg.label}
+                        </span>
+                      </div>
+                      <p className="text-white font-medium">{commande.customer_name}</p>
+                      <p className="text-gray-500 text-xs">{commande.customer_email}</p>
+                      <div className="flex justify-between items-center mt-2">
+                        <span className="text-gray-400 text-xs">{items.length} article{items.length > 1 ? "s" : ""}</span>
+                        <span className="text-white font-medium text-sm">{Number(commande.total_amount).toFixed(2)}€</span>
+                      </div>
+                      <p className="text-gray-600 text-xs mt-1 italic">{new Date(commande.created_at).toLocaleString("fr-FR")}</p>
+                    </div>
+
+                    <div className="flex gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        onClick={() => setExpandedId(isExpanded ? null : commande.id)}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 border border-gold/20 rounded-sm text-xs text-gray-400 hover:text-gold hover:border-gold/40 transition-colors min-h-[44px]"
+                      >
+                        {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                        {isExpanded ? "Fermer" : "Détails"}
+                      </button>
+                      <button
+                        onClick={() => setDeletingId(commande.id)}
+                        disabled={isPending}
+                        className="p-2 hover:text-red-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {isExpanded && (
+                      <div className="mt-4 pt-4 border-t border-gold/10 space-y-4">
+                        {/* Customer info */}
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-widest text-gray-500 mb-2">Informations client</h4>
+                          <div className="space-y-1.5">
+                            <div className="flex items-center gap-2 text-sm text-gray-300">
+                              <User className="w-3.5 h-3.5 text-gold shrink-0" />
+                              {commande.customer_name}
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-300">
+                              <Mail className="w-3.5 h-3.5 text-gold shrink-0" />
+                              <a href={`mailto:${commande.customer_email}`} className="hover:text-gold transition-colors truncate">
+                                {commande.customer_email}
+                              </a>
+                            </div>
+                            {commande.customer_phone && (
+                              <div className="flex items-center gap-2 text-sm text-gray-300">
+                                <Phone className="w-3.5 h-3.5 text-gold shrink-0" />
+                                {commande.customer_phone}
+                              </div>
+                            )}
+                            {commande.customer_address && (
+                              <div className="flex items-start gap-2 text-sm text-gray-300">
+                                <MapPin className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
+                                <span className="whitespace-pre-line">{commande.customer_address}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Items */}
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-widest text-gray-500 mb-2">Articles</h4>
+                          <div className="space-y-1.5">
+                            {items.map((item, i) => (
+                              <div key={i} className="flex justify-between items-center text-sm">
+                                <span className="text-white">{item.name} <span className="text-gray-500">×{item.quantity}</span></span>
+                                <span className="text-gold font-medium">{(item.unit_price * item.quantity).toFixed(2)}€</span>
+                              </div>
+                            ))}
+                            <div className="pt-2 border-t border-gold/10 flex justify-between text-sm font-medium">
+                              <span className="text-gray-400">Total</span>
+                              <span className="text-white">{Number(commande.total_amount).toFixed(2)}€</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Status */}
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-widest text-gray-500 mb-2">Modifier le statut</h4>
+                          <select
+                            value={commande.status}
+                            onChange={(e) => handleStatusChange(commande.id, e.target.value)}
+                            disabled={isPending}
+                            className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-3 rounded-sm text-base focus:outline-none focus:border-gold/50 disabled:opacity-50"
+                          >
+                            {ALL_STATUSES.map((s) => (
+                              <option key={s} value={s}>{STATUS_CONFIG[s].label}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Notes */}
+                        <div>
+                          <h4 className="text-[10px] uppercase tracking-widest text-gray-500 mb-2 flex items-center gap-1">
+                            <StickyNote className="w-3 h-3" /> Notes internes
+                          </h4>
+                          {editingNotesId === commande.id ? (
+                            <div className="space-y-2">
+                              <textarea
+                                value={notesValue}
+                                onChange={(e) => setNotesValue(e.target.value)}
+                                rows={3}
+                                className="w-full bg-slate-900 border border-gold/20 text-white px-3 py-3 rounded-sm text-base focus:outline-none focus:border-gold/50 resize-none"
+                                placeholder="Ajouter une note..."
+                              />
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => handleSaveNotes(commande.id)}
+                                  disabled={isPending}
+                                  className="flex-1 py-2.5 bg-gold/20 text-gold border border-gold/30 rounded-sm text-xs hover:bg-gold/30 transition-colors disabled:opacity-50 flex items-center justify-center gap-1 min-h-[44px]"
+                                >
+                                  {isPending ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
+                                  Sauvegarder
+                                </button>
+                                <button
+                                  onClick={() => setEditingNotesId(null)}
+                                  className="px-4 py-2.5 text-gray-500 text-xs hover:text-white transition-colors min-h-[44px]"
+                                >
+                                  Annuler
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => {
+                                setEditingNotesId(commande.id);
+                                setNotesValue(commande.notes ?? "");
+                              }}
+                              className="min-h-[60px] px-3 py-3 border border-dashed border-gold/10 rounded-sm text-sm text-gray-500 hover:border-gold/30 hover:text-gray-300 cursor-pointer transition-colors"
+                            >
+                              {commande.notes || "Toucher pour ajouter une note..."}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Delete confirmation modal */}

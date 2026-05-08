@@ -78,7 +78,8 @@ export default function TrashClient({ items }: Props) {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Desktop table */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-gold/10 text-[10px] uppercase tracking-widest text-gray-500">
@@ -109,7 +110,7 @@ export default function TrashClient({ items }: Props) {
                     <button
                       onClick={() => setToConfirm(item)}
                       disabled={isPending}
-                      className="p-2 hover:text-green-400 transition-colors"
+                      className="p-2 hover:text-green-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ml-auto"
                     >
                       <RotateCcw className="w-4 h-4" />
                     </button>
@@ -118,13 +119,51 @@ export default function TrashClient({ items }: Props) {
               ))}
             </tbody>
           </table>
+          {filtered.length === 0 && (
+            <div className="text-center py-20 border-t border-gold/10">
+              <p className="text-gray-500 italic">Corbeille vide.</p>
+            </div>
+          )}
         </div>
 
-        {filtered.length === 0 && (
-          <div className="text-center py-20 border-t border-gold/10">
-            <p className="text-gray-500 italic">Corbeille vide.</p>
-          </div>
-        )}
+        {/* Mobile cards */}
+        <div className="lg:hidden">
+          {filtered.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-gray-500 italic">Corbeille vide.</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-gold/5">
+              {filtered.map((item) => (
+                <div key={item.id} className="p-4 flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-[10px] uppercase tracking-widest text-gray-500 bg-luxury-slate/30 px-2 py-0.5 rounded">
+                        {item.type}
+                      </span>
+                    </div>
+                    <p className="text-white font-medium text-sm truncate">
+                      {item.data.name || item.data.order_number || "—"}
+                    </p>
+                    {item.data.customer_name && (
+                      <p className="text-gray-500 text-xs">{item.data.customer_name}</p>
+                    )}
+                    <p className="text-gray-600 text-xs mt-1">
+                      Par {item.deleted_by} · {new Date(item.created_at).toLocaleDateString("fr-FR")}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setToConfirm(item)}
+                    disabled={isPending}
+                    className="p-2 hover:text-green-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Restore confirmation */}

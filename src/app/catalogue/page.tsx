@@ -40,6 +40,13 @@ function CatalogContent() {
     setActiveGender((GENDERS as readonly string[]).includes(g ?? "") ? (g as Gender) : "Tous");
   }, [searchParams]);
 
+  // Scroll to top when gender filter changes for clear visual feedback
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [activeGender]);
+
   const updateGender = (g: Gender) => {
     setActiveGender(g);
     const params = new URLSearchParams(searchParams.toString());

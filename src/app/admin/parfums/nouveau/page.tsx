@@ -64,27 +64,27 @@ export default function NewPerfumePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Nom du parfum</label>
-              <input type="text" name="name" required className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="Ex: Bois d'Argent" />
+              <input type="text" name="name" required className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="Ex: Bois d'Argent" />
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Marque</label>
-              <input type="text" name="brand" defaultValue="Les 2 As" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" />
+              <input type="text" name="brand" defaultValue="Les 2 As" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" />
             </div>
             <div className="md:col-span-2 space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Description</label>
-              <textarea name="description" rows={4} className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 resize-none" placeholder="Décrivez l'univers olfactif..."></textarea>
+              <textarea name="description" rows={4} className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 resize-none" placeholder="Décrivez l'univers olfactif..."></textarea>
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">URL Image</label>
-              <input type="text" name="image_url" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="https://..." />
+              <input type="text" name="image_url" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="https://..." />
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Prix (€)</label>
-              <input type="number" name="price" step="0.01" required className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="0.00" />
+              <input type="number" name="price" step="0.01" required className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="0.00" />
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Stock initial</label>
-              <input type="number" name="stock" required className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="0" />
+              <input type="number" name="stock" required className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="0" />
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function NewPerfumePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Famille Olfactive</label>
-              <select name="olfactory_family" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 appearance-none">
+              <select name="olfactory_family" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 appearance-none">
                 <option value="">Sélectionner...</option>
                 <option value="Floral">Floral</option>
                 <option value="Boisé">Boisé</option>
@@ -107,7 +107,7 @@ export default function NewPerfumePage() {
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Occasion</label>
-              <select name="occasion" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 appearance-none">
+              <select name="occasion" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 appearance-none">
                 <option value="">Sélectionner...</option>
                 <option value="Quotidien">Quotidien</option>
                 <option value="Soirée">Soirée</option>
@@ -117,7 +117,7 @@ export default function NewPerfumePage() {
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Saison</label>
-              <select name="season" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50 appearance-none">
+              <select name="season" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50 appearance-none">
                 <option value="">Sélectionner...</option>
                 <option value="Printemps">Printemps</option>
                 <option value="Été">Été</option>
@@ -134,15 +134,15 @@ export default function NewPerfumePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Notes de Tête</label>
-              <input type="text" name="top_notes" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="Séparez par des virgules" />
+              <input type="text" name="top_notes" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="Séparez par des virgules" />
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Notes de Cœur</label>
-              <input type="text" name="middle_notes" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="Séparez par des virgules" />
+              <input type="text" name="middle_notes" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="Séparez par des virgules" />
             </div>
             <div className="space-y-2">
               <label className="text-gray-400 text-xs uppercase tracking-widest">Notes de Fond</label>
-              <input type="text" name="base_notes" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-2 rounded-sm focus:outline-none focus:border-gold/50" placeholder="Séparez par des virgules" />
+              <input type="text" name="base_notes" className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50" placeholder="Séparez par des virgules" />
             </div>
           </div>
         </div>

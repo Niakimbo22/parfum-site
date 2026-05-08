@@ -155,7 +155,8 @@ export default function LogsClient({ initialLogs }: Props) {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Desktop table */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-gold/10 text-[10px] uppercase tracking-widest text-gray-500">
@@ -206,12 +207,57 @@ export default function LogsClient({ initialLogs }: Props) {
               ))}
             </tbody>
           </table>
+          {filtered.length === 0 && (
+            <div className="text-center py-20 border-t border-gold/10">
+              <p className="text-gray-500 italic">Aucune entrée de log pour le moment.</p>
+            </div>
+          )}
         </div>
-        {filtered.length === 0 && (
-          <div className="text-center py-20 border-t border-gold/10">
-            <p className="text-gray-500 italic">Aucune entrée de log pour le moment.</p>
-          </div>
-        )}
+
+        {/* Mobile cards */}
+        <div className="lg:hidden">
+          {filtered.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-gray-500 italic">Aucune entrée de log pour le moment.</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-gold/5">
+              {filtered.map((log) => (
+                <div
+                  key={log.id}
+                  className={`p-4 ${log.permanent ? "bg-yellow-500/5 border-l-2 border-l-yellow-500/40" : ""}`}
+                >
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${getActorColor(log.actor)}`}>
+                        {log.actor === "System" ? "S" : log.actor[0]}
+                      </span>
+                      <span className={`font-medium text-sm ${getActorColor(log.actor)}`}>{log.actor}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${getStatusColor(log.status)}`}>
+                        {log.status}
+                      </span>
+                      {log.permanent && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-yellow-500/10 text-yellow-500">
+                          perm.
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    {log.permanent && <Lock className="w-3 h-3 text-yellow-500 shrink-0" />}
+                    <p className="text-white text-sm font-medium">{log.action}</p>
+                  </div>
+                  {log.details && (
+                    <p className="text-gray-500 font-mono text-xs mb-1 truncate">{log.details}</p>
+                  )}
+                  <p className="text-gray-600 text-xs italic">{new Date(log.created_at).toLocaleString("fr-FR")}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
