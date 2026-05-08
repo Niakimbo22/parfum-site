@@ -81,23 +81,17 @@ export default async function ParfumDetail({
             <div className="relative flex justify-center order-first lg:order-last">
               <div className="relative w-[300px] md:w-[400px] h-[420px] md:h-[560px]">
                 <div className="absolute inset-0 bg-gold/6 blur-[80px] rounded-full scale-75" />
-                <div
-                  className="relative w-full h-full"
-                  style={{
-                    maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-                  }}
-                >
+                <div className="relative w-full h-full bg-[#F7F5F0]">
                   {parfum.image_url ? (
                     <img
                       src={parfum.image_url}
                       alt={parfum.name}
-                      className="w-full h-full object-contain drop-shadow-2xl"
+                      className="w-full h-full object-contain p-8 drop-shadow-xl"
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                      <span className="font-serif text-[120px] leading-none text-gold/8">№</span>
-                      <span className="text-cream/20 text-[9px] tracking-[0.4em] uppercase text-center px-8">Photo à venir</span>
+                      <span className="font-serif text-[120px] leading-none text-luxury-black/8">№</span>
+                      <span className="text-luxury-black/25 text-[9px] tracking-[0.4em] uppercase text-center px-8">Photo à venir</span>
                     </div>
                   )}
                 </div>
