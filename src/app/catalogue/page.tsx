@@ -232,11 +232,18 @@ function CatalogContent() {
 
                       {/* Image */}
                       <div className="aspect-[4/5] overflow-hidden relative mt-2 mx-2">
-                        <img
-                          src={perfume.image_url || "/images/parfums/baccarat.png"}
-                          alt={perfume.name}
-                          className="w-full h-full object-contain bg-luxury-black p-6 transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
+                        {perfume.image_url ? (
+                          <img
+                            src={perfume.image_url}
+                            alt={perfume.name}
+                            className="w-full h-full object-contain bg-luxury-black p-6 transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-luxury-black flex flex-col items-center justify-center gap-3 p-6">
+                            <span className="font-serif text-5xl text-gold/10">№</span>
+                            <span className="text-cream/15 text-[9px] tracking-[0.3em] uppercase text-center">{perfume.name}</span>
+                          </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-luxury-charcoal/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       </div>
 

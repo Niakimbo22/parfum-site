@@ -88,11 +88,18 @@ export default async function ParfumDetail({
                     WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
                   }}
                 >
-                  <img
-                    src={parfum.image_url || "/images/parfums/baccarat.png"}
-                    alt={parfum.name}
-                    className="w-full h-full object-contain drop-shadow-2xl"
-                  />
+                  {parfum.image_url ? (
+                    <img
+                      src={parfum.image_url}
+                      alt={parfum.name}
+                      className="w-full h-full object-contain drop-shadow-2xl"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                      <span className="font-serif text-[120px] leading-none text-gold/8">№</span>
+                      <span className="text-cream/20 text-[9px] tracking-[0.4em] uppercase text-center px-8">Photo à venir</span>
+                    </div>
+                  )}
                 </div>
                 {/* Decorative */}
                 <span className="absolute top-4 right-0 font-serif text-[100px] leading-none text-gold/4 pointer-events-none select-none">
