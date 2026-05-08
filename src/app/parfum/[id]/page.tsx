@@ -69,7 +69,7 @@ export default async function ParfumDetail({
           {/* Back */}
           <Link
             href="/catalogue"
-            className="inline-flex items-center gap-2 text-cream/30 hover:text-gold text-[10px] tracking-[0.3em] uppercase transition-colors mb-16 group"
+            className="animate-slide-left animate-delay-100 inline-flex items-center gap-2 text-cream/30 hover:text-gold text-[10px] tracking-[0.3em] uppercase transition-colors mb-16 group"
           >
             <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
             Catalogue
@@ -78,7 +78,7 @@ export default async function ParfumDetail({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
             {/* Image */}
-            <div className="relative flex justify-center order-first lg:order-last">
+            <div className="animate-slide-right animate-delay-200 relative flex justify-center order-first lg:order-last">
               <div className="relative w-[300px] md:w-[400px] h-[420px] md:h-[560px]">
                 <div className="absolute inset-0 bg-gold/6 blur-[80px] rounded-full scale-75" />
                 <div className="relative w-full h-full bg-[#F7F5F0]">
@@ -95,7 +95,6 @@ export default async function ParfumDetail({
                     </div>
                   )}
                 </div>
-                {/* Decorative */}
                 <span className="absolute top-4 right-0 font-serif text-[100px] leading-none text-gold/4 pointer-events-none select-none">
                   №
                 </span>
@@ -106,7 +105,7 @@ export default async function ParfumDetail({
             <div className="flex flex-col gap-8">
 
               {/* Eyebrow */}
-              <div className="flex items-center gap-4">
+              <div className="animate-fade-up animate-delay-100 flex items-center gap-4">
                 <span className="eyebrow">{parfum.brand || "Les 2 As"}</span>
                 {parfum.gender && parfum.gender !== "Mixte" && (
                   <span className="text-[9px] tracking-[0.3em] uppercase text-cream/30 border border-cream/10 px-3 py-1">
@@ -121,29 +120,29 @@ export default async function ParfumDetail({
               </div>
 
               {/* Name */}
-              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-cream leading-none tracking-tight">
+              <h1 className="animate-fade-up animate-delay-200 font-serif text-5xl md:text-6xl lg:text-7xl text-cream leading-none tracking-tight">
                 {parfum.name}
               </h1>
 
               {/* Family */}
               {parfum.olfactory_family && (
-                <p className="text-gold/60 text-xs tracking-[0.3em] uppercase">
+                <p className="animate-fade-up animate-delay-300 text-gold/60 text-xs tracking-[0.3em] uppercase">
                   {parfum.olfactory_family}
                 </p>
               )}
 
               {/* Divider */}
-              <div className="w-12 h-px bg-gold/30" />
+              <div className="animate-scale-in animate-delay-300 w-12 h-px bg-gold/30" />
 
               {/* Description */}
               {parfum.description && (
-                <p className="text-cream/55 text-base leading-relaxed max-w-md font-light">
+                <p className="animate-fade-up animate-delay-400 text-cream/55 text-base leading-relaxed max-w-md font-light">
                   {parfum.description}
                 </p>
               )}
 
               {/* Price + CTA */}
-              <div className="flex items-center gap-6 pt-2">
+              <div className="animate-fade-up animate-delay-500 flex items-center gap-6 pt-2">
                 {parfum.price > 0 && (
                   <span className="font-serif text-4xl text-cream font-oldstyle">
                     {parfum.price}
@@ -169,7 +168,7 @@ export default async function ParfumDetail({
         <section className="py-28 px-6 border-t border-gold/8">
           <div className="max-w-5xl mx-auto">
 
-            <div className="mb-16">
+            <div className="mb-16 stagger-item">
               <div className="eyebrow mb-4">Composition</div>
               <h2 className="font-serif text-4xl md:text-5xl text-cream tracking-tight">
                 Pyramide <em className="not-italic text-gold italic">Olfactive</em>
@@ -179,7 +178,7 @@ export default async function ParfumDetail({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
 
               {topNotes.length > 0 && (
-                <div className="bg-luxury-charcoal p-8 border-t-2 border-gold/40 group hover:border-gold transition-colors duration-500">
+                <div className="stagger-item animate-delay-200 bg-luxury-charcoal p-8 border-t-2 border-gold/40 group hover:border-gold transition-colors duration-500">
                   <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-6 group-hover:text-gold/80 transition-colors">
                     Notes de Tête
                   </p>
@@ -195,7 +194,7 @@ export default async function ParfumDetail({
               )}
 
               {heartNotes.length > 0 && (
-                <div className="bg-luxury-charcoal p-8 border-t-2 border-gold/60 group hover:border-gold transition-colors duration-500 md:mt-6">
+                <div className="stagger-item animate-delay-300 bg-luxury-charcoal p-8 border-t-2 border-gold/60 group hover:border-gold transition-colors duration-500 md:mt-6">
                   <p className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6 group-hover:text-gold/80 transition-colors">
                     Notes de Cœur
                   </p>
@@ -211,7 +210,7 @@ export default async function ParfumDetail({
               )}
 
               {baseNotes.length > 0 && (
-                <div className="bg-luxury-charcoal p-8 border-t-2 border-gold/80 group hover:border-gold transition-colors duration-500 md:mt-12">
+                <div className="stagger-item animate-delay-400 bg-luxury-charcoal p-8 border-t-2 border-gold/80 group hover:border-gold transition-colors duration-500 md:mt-12">
                   <p className="text-[9px] tracking-[0.4em] uppercase text-gold/70 mb-6 group-hover:text-gold/90 transition-colors">
                     Notes de Fond
                   </p>
