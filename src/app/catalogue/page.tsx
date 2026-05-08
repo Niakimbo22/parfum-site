@@ -293,9 +293,7 @@ function CatalogContent() {
             <div>
               <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Contact</h4>
               <ul className="space-y-3 text-sm text-cream/40">
-                <li>123 Avenue des Champs-Élysées</li>
-                <li>75008 Paris, France</li>
-                <li><a href="mailto:contact@les2as.fr" className="hover:text-cream transition-colors">contact@les2as.fr</a></li>
+                {/* email à venir */}
               </ul>
             </div>
             <div>
