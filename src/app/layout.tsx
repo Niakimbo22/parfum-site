@@ -26,6 +26,11 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: "Parfumerie Les 2 As | L'Excellence Olfactive",
   description: "Découvrez notre collection exclusive de parfums de luxe. Une expérience sensorielle unique pour lui et pour elle.",
+  other: {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
+  },
 };
 
 export default function RootLayout({
