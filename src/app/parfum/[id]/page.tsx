@@ -81,7 +81,10 @@ export default async function ParfumDetail({
             <div className="animate-slide-right animate-delay-200 relative flex justify-center order-first lg:order-last">
               <div className="relative w-[300px] md:w-[400px] h-[420px] md:h-[560px]">
                 <div className="absolute inset-0 bg-gold/6 blur-[80px] rounded-full scale-75" />
-                <div className="relative w-full h-full bg-[#F7F5F0]">
+                <div
+                  className="relative w-full h-full bg-[#F7F5F0]"
+                  style={{ viewTransitionName: `perfume-img-${parfum.id}` }}
+                >
                   {parfum.image_url ? (
                     <img
                       src={parfum.image_url}

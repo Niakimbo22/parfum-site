@@ -204,6 +204,19 @@ export async function restoreFromTrash(trashId: string) {
   return { success: true };
 }
 
+export async function toggleBestseller(id: string, value: boolean) {
+  await requireAdmin();
+  const { error } = await supabaseAdmin()
+    .from("perfumes")
+    .update({ is_bestseller: value })
+    .eq("id", id);
+  if (error) return { error: error.message };
+  revalidatePath("/admin/parfums");
+  revalidatePath("/catalogue");
+  revalidatePath("/");
+  return { success: true };
+}
+
 export async function emptyTrash() {
   const session = await requireAdmin();
 

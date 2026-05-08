@@ -217,7 +217,7 @@ function CatalogContent() {
                     <Link
                       href={`/parfum/${perfume.id}`}
                       key={perfume.id}
-                      className="group bg-luxury-charcoal hover:shadow-[0_8px_32px_0_rgba(201,169,97,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 block overflow-hidden stagger-item"
+                      className="group bg-luxury-charcoal hover:shadow-[0_8px_32px_0_rgba(201,169,97,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 active:scale-[0.98] active:shadow-none block overflow-hidden stagger-item"
                       style={{ animationDelay: `${idx * 0.06}s` }}
                     >
                       {/* N° badge */}
@@ -231,7 +231,15 @@ function CatalogContent() {
                       </div>
 
                       {/* Image */}
-                      <div className="aspect-[4/5] overflow-hidden relative mt-2 mx-2 bg-[#F7F5F0]">
+                      <div
+                        className="aspect-[4/5] overflow-hidden relative mt-2 mx-2 bg-[#F7F5F0]"
+                        style={{ viewTransitionName: `perfume-img-${perfume.id}` }}
+                      >
+                        {perfume.is_bestseller && (
+                          <div className="absolute top-3 left-3 z-10 text-[8px] tracking-[0.3em] uppercase bg-gold text-luxury-black px-2 py-1 font-medium">
+                            Bestseller
+                          </div>
+                        )}
                         {perfume.image_url ? (
                           <img
                             src={perfume.image_url}

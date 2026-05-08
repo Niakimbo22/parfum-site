@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { InstagramIcon, FacebookIcon } from "@/components/SocialIcons";
+import { createClient } from "@/lib/supabase-server";
 
 const BRANDS = [
   "Dior", "Chanel", "Creed", "Bvlgari", "YSL",
@@ -32,7 +33,14 @@ const FEATURED = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: bestsellers } = await supabase
+    .from("perfumes")
+    .select("id, name, brand, image_url, price")
+    .eq("is_bestseller", true)
+    .limit(4);
+
   return (
     <main className="flex flex-col min-h-screen noise-overlay">
       <Navbar />
@@ -214,6 +222,57 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Bestsellers ──────────────────────────── */}
+      {bestsellers && bestsellers.length > 0 && (
+        <section className="py-28 px-6 bg-luxury-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-end mb-16 gap-8">
+              <div>
+                <div className="eyebrow mb-4">Sélection</div>
+                <h2 className="font-serif text-4xl md:text-5xl text-cream">
+                  Nos <em className="not-italic text-gold italic">Bestsellers</em>
+                </h2>
+              </div>
+              <Link
+                href="/catalogue"
+                className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-gold/60 hover:text-gold transition-colors shrink-0"
+              >
+                Voir tout <ArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {bestsellers.map((p) => (
+                <Link
+                  href={`/parfum/${p.id}`}
+                  key={p.id}
+                  className="group block bg-luxury-charcoal overflow-hidden hover:shadow-[0_8px_32px_0_rgba(201,169,97,0.08)] transition-all duration-500 hover:-translate-y-1"
+                >
+                  <div className="aspect-[3/4] bg-[#F7F5F0] overflow-hidden">
+                    {p.image_url ? (
+                      <img
+                        src={p.image_url}
+                        alt={p.name}
+                        className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="font-serif text-4xl text-luxury-black/10">№</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-serif text-sm text-cream group-hover:text-gold transition-colors leading-snug mb-0.5">
+                      {p.name}
+                    </h3>
+                    <p className="text-cream/30 text-[10px] tracking-wide">{p.brand || "Les 2 As"}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Footer ───────────────────────────────── */}
       <footer className="bg-luxury-charcoal border-t border-gold/10 pt-20 pb-10 px-6">

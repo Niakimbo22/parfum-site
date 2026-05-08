@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import VersionChecker from "@/components/VersionChecker";
+import PageTransition from "@/components/PageTransition";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-luxury-black">
         <VersionChecker />
+        <PageTransition />
         {children}
       </body>
     </html>

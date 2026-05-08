@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Plus, Edit, Trash2, Search, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, Search, Loader2, Star } from "lucide-react";
 import { useState, useTransition } from "react";
-import { deletePerfume } from "./actions";
+import { deletePerfume, toggleBestseller } from "./actions";
 
 interface Perfume {
   id: string;
@@ -13,6 +13,7 @@ interface Perfume {
   price: number;
   stock: number;
   image_url: string | null;
+  is_bestseller: boolean;
 }
 
 interface Props {
@@ -118,6 +119,13 @@ export default function PerfumesClient({ perfumes }: Props) {
                   </td>
                   <td className="p-4 text-right">
                     <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => startTransition(() => { toggleBestseller(perfume.id, !perfume.is_bestseller); })}
+                        className={`p-2 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${perfume.is_bestseller ? "text-gold" : "text-gray-600 hover:text-gold"}`}
+                        title={perfume.is_bestseller ? "Retirer bestseller" : "Marquer bestseller"}
+                      >
+                        <Star className={`w-4 h-4 ${perfume.is_bestseller ? "fill-gold" : ""}`} />
+                      </button>
                       <Link href={`/admin/parfums/${perfume.id}`} className="p-2 hover:text-gold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
                         <Edit className="w-4 h-4" />
                       </Link>
@@ -177,6 +185,13 @@ export default function PerfumesClient({ perfumes }: Props) {
                           </span>
                         </div>
                         <div className="flex gap-1">
+                          <button
+                            onClick={() => startTransition(() => { toggleBestseller(perfume.id, !perfume.is_bestseller); })}
+                            className={`p-2 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${perfume.is_bestseller ? "text-gold" : "text-gray-600 hover:text-gold"}`}
+                            title={perfume.is_bestseller ? "Retirer bestseller" : "Marquer bestseller"}
+                          >
+                            <Star className={`w-4 h-4 ${perfume.is_bestseller ? "fill-gold" : ""}`} />
+                          </button>
                           <Link
                             href={`/admin/parfums/${perfume.id}`}
                             className="p-2 hover:text-gold transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"

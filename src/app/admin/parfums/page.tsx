@@ -8,7 +8,7 @@ export default async function AdminPerfumesPage() {
   await requireAdmin();
   const { data, error } = await supabaseAdmin()
     .from("perfumes")
-    .select("id, name, brand, olfactory_family, price, stock, image_url")
+    .select("id, name, brand, olfactory_family, price, stock, image_url, is_bestseller")
     .order("name");
 
   if (error) {
