@@ -55,12 +55,25 @@ CREATE INDEX IF NOT EXISTS commandes_created_at_idx ON commandes (created_at DES
 
 ALTER TABLE commandes ENABLE ROW LEVEL SECURITY;
 
--- Customers (anon) can place orders
+-- Customers (anon) peuvent placer une commande, avec validation stricte
 DROP POLICY IF EXISTS "Customers can place orders" ON commandes;
-CREATE POLICY "Customers can place orders" ON commandes
+DROP POLICY IF EXISTS "Anon can insert orders only" ON commandes;
+CREATE POLICY "Anon can insert orders only" ON commandes
     FOR INSERT
     TO anon, authenticated
-    WITH CHECK (true);
+    WITH CHECK (
+      char_length(customer_name) BETWEEN 1 AND 200
+      AND char_length(customer_email) BETWEEN 5 AND 300
+      AND position('@' in customer_email) > 1
+      AND total_amount >= 0
+      AND jsonb_typeof(items) = 'array'
+      AND jsonb_array_length(items) > 0
+      AND jsonb_array_length(items) <= 50
+    );
 
--- Admins use service_role (bypasses RLS) — no SELECT/UPDATE/DELETE policy needed for anon
+-- Admins (service_role) bypass RLS — pas de policy SELECT/UPDATE/DELETE pour anon
 REVOKE SELECT, UPDATE, DELETE ON commandes FROM anon, authenticated;
+
+-- Verrouiller search_path des functions (sécurité)
+ALTER FUNCTION set_order_number() SET search_path = public, pg_catalog;
+ALTER FUNCTION update_updated_at() SET search_path = public, pg_catalog;
