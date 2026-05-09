@@ -16,10 +16,12 @@ import {
   X,
 } from "lucide-react";
 import { handleLogout } from "./logout-action";
+import AdminTutorial from "./AdminTutorial";
 
 interface Props {
   children: React.ReactNode;
   adminName: string;
+  showTutorial?: boolean;
 }
 
 const NAV_LINKS = [
@@ -33,7 +35,7 @@ const NAV_LINKS = [
   { href: "/admin/trash", label: "Corbeille", icon: Trash2 },
 ];
 
-export default function AdminShell({ children, adminName }: Props) {
+export default function AdminShell({ children, adminName, showTutorial }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const closeDrawer = () => setDrawerOpen(false);
@@ -145,6 +147,9 @@ export default function AdminShell({ children, adminName }: Props) {
           {children}
         </div>
       </main>
+
+      {/* Tutorial — one-time, self-removes after seen */}
+      {showTutorial && <AdminTutorial adminName={adminName} />}
     </div>
   );
 }
