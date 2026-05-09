@@ -53,7 +53,7 @@ export async function emptyTrash() {
   const { error } = await supabaseAdmin()
     .from("trash")
     .delete()
-    .gt("id", "");
+    .not("id", "is", null);
 
   if (error) {
     await recordAudit({
