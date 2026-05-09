@@ -51,180 +51,229 @@ export default async function ParfumDetail({
     ? JSON.parse(parfum.occasion)
     : [];
 
+  const hasNotes = topNotes.length > 0 || heartNotes.length > 0 || baseNotes.length > 0;
+
   return (
     <div className="min-h-screen flex flex-col bg-luxury-black">
       <Navbar />
 
-      {/* ── Hero ── */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      {/* ── HERO: split full-screen ── */}
+      <section className="relative flex flex-col lg:flex-row min-h-[calc(100vh-96px)] overflow-hidden">
 
-        {/* Ambient glow */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] rounded-full bg-gold/3 blur-[140px]" />
-          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-gold/2 blur-[100px]" />
-        </div>
+        {/* ── LEFT: editorial text ── */}
+        <div className="relative z-10 flex flex-col justify-center px-8 md:px-14 xl:px-20 py-20 w-full lg:w-[48%] order-2 lg:order-1">
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-20">
+          {/* Vertical gold accent line */}
+          <div className="absolute left-0 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-gold/30 to-transparent hidden lg:block" />
 
           {/* Back */}
           <Link
             href="/catalogue"
-            className="animate-slide-left animate-delay-100 inline-flex items-center gap-2 text-cream/30 hover:text-gold text-[10px] tracking-[0.3em] uppercase transition-colors mb-16 group"
+            className="inline-flex items-center gap-2 text-cream/30 hover:text-gold text-[9px] tracking-[0.35em] uppercase transition-colors mb-14 group w-fit"
           >
             <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
             Catalogue
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Brand + Gender */}
+          <div className="flex items-center gap-4 mb-5 animate-fade-up animate-delay-100">
+            <div className="eyebrow">{parfum.brand || "Les 2 As"}</div>
+            {parfum.gender && (
+              <span className="text-[9px] tracking-[0.25em] uppercase text-cream/30 border border-cream/10 px-3 py-1">
+                {parfum.gender === "Mixte" ? "Unisexe" : parfum.gender}
+              </span>
+            )}
+          </div>
 
-            {/* Image */}
-            <div className="animate-slide-right animate-delay-200 relative flex justify-center order-first lg:order-last">
-              <div className="relative w-[300px] md:w-[400px] h-[420px] md:h-[560px]">
-                <div className="absolute inset-0 bg-gold/6 blur-[80px] rounded-full scale-75" />
-                <div
-                  className="relative w-full h-full bg-[#F7F5F0]"
-                  style={{ viewTransitionName: `perfume-img-${parfum.id}` }}
+          {/* Name */}
+          <h1
+            className="font-serif text-5xl md:text-6xl xl:text-[5.5rem] text-cream leading-[0.92] tracking-tight mb-5 animate-fade-up animate-delay-200"
+            style={{ viewTransitionName: `perfume-name-${parfum.id}` }}
+          >
+            {parfum.name}
+          </h1>
+
+          {/* Olfactory family */}
+          {parfum.olfactory_family && (
+            <p className="text-gold/60 text-[10px] tracking-[0.35em] uppercase mb-7 animate-fade-up animate-delay-300">
+              {parfum.olfactory_family}
+            </p>
+          )}
+
+          {/* Animated divider */}
+          <div className="w-10 h-px bg-gold mb-7 animate-draw-line animate-delay-300" />
+
+          {/* Description */}
+          {parfum.description && (
+            <p className="text-cream/55 text-[15px] leading-[1.8] max-w-[380px] font-light mb-8 animate-fade-up animate-delay-400">
+              {parfum.description}
+            </p>
+          )}
+
+          {/* Top notes preview */}
+          {topNotes.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-10 animate-fade-up animate-delay-400">
+              {topNotes.slice(0, 5).map((n) => (
+                <span
+                  key={n}
+                  className="text-[9px] tracking-widest uppercase text-gold/50 border border-gold/15 px-3 py-1.5 hover:border-gold/40 hover:text-gold/80 transition-colors"
                 >
-                  {parfum.image_url ? (
-                    <img
-                      src={parfum.image_url}
-                      alt={parfum.name}
-                      className="w-full h-full object-contain p-8 drop-shadow-xl"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                      <span className="font-serif text-[120px] leading-none text-luxury-black/8">№</span>
-                      <span className="text-luxury-black/25 text-[9px] tracking-[0.4em] uppercase text-center px-8">Photo à venir</span>
-                    </div>
-                  )}
-                </div>
-                <span className="absolute top-4 right-0 font-serif text-[100px] leading-none text-gold/4 pointer-events-none select-none">
-                  №
+                  {n}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Price + CTA */}
+          <div className="flex items-center gap-8 animate-fade-up animate-delay-500">
+            {parfum.price > 0 && (
+              <div>
+                <p className="text-[9px] tracking-[0.3em] uppercase text-cream/25 mb-1">Prix</p>
+                <span className="font-serif text-4xl text-cream font-oldstyle leading-none">
+                  {parfum.price}
+                  <span className="text-xl text-gold/60 ml-1.5">€</span>
                 </span>
               </div>
-            </div>
+            )}
+            <Link
+              href="/commande"
+              className="gold-button inline-flex items-center gap-3 group"
+            >
+              Commander
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
 
-            {/* Text */}
-            <div className="flex flex-col gap-8">
+        {/* ── RIGHT: full image panel ── */}
+        <div className="relative w-full lg:w-[52%] min-h-[55vw] lg:min-h-0 overflow-hidden order-1 lg:order-2">
 
-              {/* Eyebrow */}
-              <div className="animate-fade-up animate-delay-100 flex items-center gap-4">
-                <span className="eyebrow">{parfum.brand || "Les 2 As"}</span>
-                {parfum.gender && parfum.gender !== "Mixte" && (
-                  <span className="text-[9px] tracking-[0.3em] uppercase text-cream/30 border border-cream/10 px-3 py-1">
-                    {parfum.gender}
-                  </span>
-                )}
-                {parfum.gender === "Mixte" && (
-                  <span className="text-[9px] tracking-[0.3em] uppercase text-cream/30 border border-cream/10 px-3 py-1">
-                    Unisexe
-                  </span>
-                )}
+          {/* Left-to-right gradient (only on desktop, connects left panel) */}
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-luxury-black to-transparent z-20 hidden lg:block pointer-events-none" />
+
+          {/* Ambient glow behind bottle */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+            <div className="w-[60%] h-[60%] rounded-full bg-gold/10 blur-[90px] animate-pulse-glow" />
+          </div>
+
+          {/* Decorative huge number */}
+          <span className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 font-serif text-[120px] md:text-[180px] leading-none text-gold/5 select-none pointer-events-none z-10">
+            №
+          </span>
+
+          {/* Bestseller badge */}
+          {parfum.is_bestseller && (
+            <div className="absolute top-8 right-8 z-30 flex flex-col items-center gap-1">
+              <div className="w-14 h-14 rounded-full border border-gold/30 flex items-center justify-center">
+                <div className="text-center">
+                  <p className="text-[7px] tracking-[0.3em] uppercase text-gold leading-tight">Best</p>
+                  <p className="text-[7px] tracking-[0.3em] uppercase text-gold leading-tight">Seller</p>
+                </div>
               </div>
-
-              {/* Name */}
-              <h1 className="animate-fade-up animate-delay-200 font-serif text-5xl md:text-6xl lg:text-7xl text-cream leading-none tracking-tight">
-                {parfum.name}
-              </h1>
-
-              {/* Family */}
-              {parfum.olfactory_family && (
-                <p className="animate-fade-up animate-delay-300 text-gold/60 text-xs tracking-[0.3em] uppercase">
-                  {parfum.olfactory_family}
-                </p>
-              )}
-
-              {/* Divider */}
-              <div className="animate-scale-in animate-delay-300 w-12 h-px bg-gold/30" />
-
-              {/* Description */}
-              {parfum.description && (
-                <p className="animate-fade-up animate-delay-400 text-cream/55 text-base leading-relaxed max-w-md font-light">
-                  {parfum.description}
-                </p>
-              )}
-
-              {/* Price + CTA */}
-              <div className="animate-fade-up animate-delay-500 flex items-center gap-6 pt-2">
-                {parfum.price > 0 && (
-                  <span className="font-serif text-4xl text-cream font-oldstyle">
-                    {parfum.price}
-                    <span className="text-lg text-cream/40 ml-1">€</span>
-                  </span>
-                )}
-                <Link
-                  href="/commande"
-                  className="gold-button inline-flex items-center gap-3 group"
-                >
-                  Commander
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-
             </div>
+          )}
+
+          {/* Image */}
+          <div
+            className="absolute inset-0 flex items-center justify-center p-12 lg:p-16 z-10"
+            style={{ viewTransitionName: `perfume-img-${parfum.id}` }}
+          >
+            {parfum.image_url ? (
+              <img
+                src={parfum.image_url}
+                alt={parfum.name}
+                className="perfume-img max-w-full max-h-full object-contain animate-float drop-shadow-2xl"
+              />
+            ) : (
+              <span className="font-serif text-[160px] leading-none text-gold/8 select-none">№</span>
+            )}
           </div>
         </div>
       </section>
 
-      {/* ── Pyramide olfactive ── */}
-      {(topNotes.length > 0 || heartNotes.length > 0 || baseNotes.length > 0) && (
-        <section className="py-28 px-6 border-t border-gold/8">
+      {/* ── PYRAMIDE OLFACTIVE ── */}
+      {hasNotes && (
+        <section className="py-28 px-6 border-t border-gold/8 bg-luxury-charcoal">
           <div className="max-w-5xl mx-auto">
 
-            <div className="mb-16 stagger-item">
-              <div className="eyebrow mb-4">Composition</div>
-              <h2 className="font-serif text-4xl md:text-5xl text-cream tracking-tight">
-                Pyramide <em className="not-italic text-gold italic">Olfactive</em>
-              </h2>
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+              <div>
+                <div className="eyebrow mb-4">Composition</div>
+                <h2 className="font-serif text-4xl md:text-5xl text-cream tracking-tight">
+                  Pyramide <em className="not-italic text-gold italic">Olfactive</em>
+                </h2>
+              </div>
+              <p className="text-cream/25 text-xs tracking-widest uppercase mt-4 md:mt-0">
+                {[topNotes, heartNotes, baseNotes].flat().length} matières
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+            {/* Pyramid — staggered heights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gold/5 overflow-hidden rounded-sm">
 
               {topNotes.length > 0 && (
-                <div className="stagger-item animate-delay-200 bg-luxury-charcoal p-8 border-t-2 border-gold/40 group hover:border-gold transition-colors duration-500">
-                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-6 group-hover:text-gold/80 transition-colors">
-                    Notes de Tête
-                  </p>
-                  <ul className="space-y-2.5">
+                <div className="reveal bg-luxury-black p-8 md:p-10 group hover:bg-luxury-charcoal transition-colors duration-500" data-reveal-delay="0">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-5 h-5 rounded-full border border-gold/30 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gold/40" />
+                    </div>
+                    <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 group-hover:text-gold/80 transition-colors">
+                      Notes de Tête
+                    </p>
+                  </div>
+                  <ul className="space-y-3">
                     {topNotes.map((n) => (
-                      <li key={n} className="text-cream/70 text-sm font-light flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-gold/40 shrink-0" />
+                      <li key={n} className="text-cream/60 text-sm font-light flex items-baseline gap-3">
+                        <span className="text-gold/20 text-[8px] shrink-0">◆</span>
                         {n}
                       </li>
                     ))}
                   </ul>
+                  <div className="mt-8 text-[9px] tracking-widest text-cream/15 uppercase">Volatiles</div>
                 </div>
               )}
 
               {heartNotes.length > 0 && (
-                <div className="stagger-item animate-delay-300 bg-luxury-charcoal p-8 border-t-2 border-gold/60 group hover:border-gold transition-colors duration-500 md:mt-6">
-                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6 group-hover:text-gold/80 transition-colors">
-                    Notes de Cœur
-                  </p>
-                  <ul className="space-y-2.5">
+                <div className="reveal bg-luxury-black p-8 md:p-10 md:pt-14 group hover:bg-luxury-charcoal transition-colors duration-500 border-y md:border-y-0 md:border-x border-gold/5" data-reveal-delay="120">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-5 h-5 rounded-full border border-gold/50 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gold/60" />
+                    </div>
+                    <p className="text-[9px] tracking-[0.4em] uppercase text-gold/60 group-hover:text-gold transition-colors">
+                      Notes de Cœur
+                    </p>
+                  </div>
+                  <ul className="space-y-3">
                     {heartNotes.map((n) => (
-                      <li key={n} className="text-cream/80 text-sm font-light flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-gold/60 shrink-0" />
+                      <li key={n} className="text-cream/75 text-sm font-light flex items-baseline gap-3">
+                        <span className="text-gold/40 text-[8px] shrink-0">◆</span>
                         {n}
                       </li>
                     ))}
                   </ul>
+                  <div className="mt-8 text-[9px] tracking-widest text-cream/15 uppercase">Signature</div>
                 </div>
               )}
 
               {baseNotes.length > 0 && (
-                <div className="stagger-item animate-delay-400 bg-luxury-charcoal p-8 border-t-2 border-gold/80 group hover:border-gold transition-colors duration-500 md:mt-12">
-                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/70 mb-6 group-hover:text-gold/90 transition-colors">
-                    Notes de Fond
-                  </p>
-                  <ul className="space-y-2.5">
+                <div className="reveal bg-luxury-black p-8 md:p-10 md:pt-20 group hover:bg-luxury-charcoal transition-colors duration-500" data-reveal-delay="240">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-5 h-5 rounded-full border border-gold flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gold" />
+                    </div>
+                    <p className="text-[9px] tracking-[0.4em] uppercase text-gold/80 group-hover:text-gold transition-colors">
+                      Notes de Fond
+                    </p>
+                  </div>
+                  <ul className="space-y-3">
                     {baseNotes.map((n) => (
-                      <li key={n} className="text-cream text-sm font-light flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-gold shrink-0" />
+                      <li key={n} className="text-cream text-sm font-light flex items-baseline gap-3">
+                        <span className="text-gold text-[8px] shrink-0">◆</span>
                         {n}
                       </li>
                     ))}
                   </ul>
+                  <div className="mt-8 text-[9px] tracking-widest text-cream/15 uppercase">Sillage</div>
                 </div>
               )}
 
@@ -233,19 +282,19 @@ export default async function ParfumDetail({
         </section>
       )}
 
-      {/* ── Infos ── */}
+      {/* ── SAISONS & OCCASIONS ── */}
       {(seasons.length > 0 || occasions.length > 0) && (
-        <section className="py-20 px-6 border-t border-gold/8 bg-luxury-charcoal">
-          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-12">
+        <section className="py-20 px-6 border-t border-gold/8 bg-luxury-black">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-16 reveal">
 
             {seasons.length > 0 && (
               <div>
-                <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-5">Saisons</p>
+                <p className="text-[9px] tracking-[0.45em] uppercase text-gold/50 mb-6">Saisons idéales</p>
                 <div className="flex flex-wrap gap-2">
                   {seasons.map((s) => (
                     <span
                       key={s}
-                      className="text-[10px] tracking-[0.2em] uppercase text-cream/60 border border-gold/15 px-4 py-2"
+                      className="text-[10px] tracking-[0.2em] uppercase text-cream/60 border border-gold/15 px-4 py-2 hover:border-gold/40 hover:text-cream transition-colors"
                     >
                       {s}
                     </span>
@@ -256,12 +305,12 @@ export default async function ParfumDetail({
 
             {occasions.length > 0 && (
               <div>
-                <p className="text-[9px] tracking-[0.4em] uppercase text-gold/50 mb-5">Occasions</p>
+                <p className="text-[9px] tracking-[0.45em] uppercase text-gold/50 mb-6">Occasions</p>
                 <div className="flex flex-wrap gap-2">
                   {occasions.map((o) => (
                     <span
                       key={o}
-                      className="text-[10px] tracking-[0.2em] uppercase text-cream/60 border border-gold/15 px-4 py-2"
+                      className="text-[10px] tracking-[0.2em] uppercase text-cream/60 border border-gold/15 px-4 py-2 hover:border-gold/40 hover:text-cream transition-colors"
                     >
                       {o}
                     </span>
@@ -274,20 +323,24 @@ export default async function ParfumDetail({
         </section>
       )}
 
-      {/* ── Quote / CTA ── */}
-      <section className="py-24 px-6 border-t border-gold/8 text-center">
+      {/* ── CTA FINAL ── */}
+      <section className="py-24 px-6 border-t border-gold/8 bg-luxury-charcoal text-center reveal-scale">
         <div className="max-w-xl mx-auto">
-          <p className="text-cream/25 text-xs tracking-[0.3em] uppercase mb-8">Intéressé par ce parfum ?</p>
-          <Link href="/commande" className="gold-button inline-flex items-center gap-3 group">
-            Passer commande
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <div className="mt-10">
+          <div className="eyebrow justify-center mb-6">Votre prochaine fragrance</div>
+          <h3 className="font-serif text-3xl md:text-4xl text-cream mb-10 leading-snug">
+            Prêt à porter<br />
+            <em className="text-gold italic">{parfum.name} ?</em>
+          </h3>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/commande" className="gold-button inline-flex items-center gap-3 group">
+              Passer commande
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
             <Link
               href="/catalogue"
-              className="text-cream/30 hover:text-cream text-[10px] tracking-[0.3em] uppercase transition-colors"
+              className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-cream/40 hover:text-cream border border-cream/10 hover:border-cream/30 px-8 py-3 transition-all duration-300"
             >
-              ← Retour au catalogue
+              Explorer le catalogue
             </Link>
           </div>
         </div>
@@ -300,7 +353,7 @@ export default async function ParfumDetail({
             <div>
               <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
               <p className="text-cream/35 text-sm leading-relaxed">
-                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2026.
+                Maison de parfumerie fine. L'excellence olfactive depuis 2026.
               </p>
             </div>
             <div>

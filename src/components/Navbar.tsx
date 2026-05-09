@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Navbar() {
   return (
@@ -38,7 +39,8 @@ export default function Navbar() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
             <Link href="/commande" className="hidden sm:flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-cream/60 hover:text-gold transition-colors duration-300">
               Commander
             </Link>

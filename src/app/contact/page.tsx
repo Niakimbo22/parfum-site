@@ -128,7 +128,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div>
               <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
-              <p className="text-cream/35 text-sm leading-relaxed">Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.</p>
+              <p className="text-cream/35 text-sm leading-relaxed">Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2026.</p>
             </div>
             <div>
               <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Boutique</h4>

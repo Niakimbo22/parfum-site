@@ -20,6 +20,43 @@
   --foreground: #F5F0E8;
 }
 
+/* ── Light theme ─────────────────────────── */
+
+[data-theme="light"] {
+  --background: #F7F3EC;
+  --foreground: #1C1208;
+  --color-luxury-black: #F7F3EC;
+  --color-luxury-charcoal: #EDE6D8;
+  --color-luxury-slate: #E0D8C8;
+  --color-cream: #1C1208;
+  --color-ivory: #0A0802;
+}
+
+[data-theme="light"] body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Image blend: luminosity dark / multiply light */
+.perfume-img {
+  mix-blend-mode: luminosity;
+  filter: brightness(0.95) contrast(1.05);
+}
+[data-theme="light"] .perfume-img {
+  mix-blend-mode: multiply;
+  filter: brightness(0.98) contrast(1.02);
+}
+
+/* Scrollbar light */
+[data-theme="light"]::-webkit-scrollbar-track { background: #F7F3EC; }
+[data-theme="light"]::-webkit-scrollbar-thumb { background: #C9A961; }
+
+/* Navbar light */
+[data-theme="light"] nav {
+  background-color: rgba(247, 243, 236, 0.88) !important;
+  border-color: rgba(201, 169, 97, 0.15) !important;
+}
+
 /* Selection */
 ::selection {
   background: #C9A961;

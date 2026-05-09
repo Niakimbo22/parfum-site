@@ -6,6 +6,7 @@ import PageTransition from "@/components/PageTransition";
 import LuxuryCursor from "@/components/LuxuryCursor";
 import AmbientParticles from "@/components/AmbientParticles";
 import ScrollReveal from "@/components/ScrollReveal";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -49,6 +50,7 @@ export default function RootLayout({
       className={`${inter.variable} ${playfair.variable} ${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-luxury-black">
+        <ThemeProvider />
         <LuxuryCursor />
         <AmbientParticles />
         <ScrollReveal />
