@@ -30,7 +30,7 @@ export default function Navbar() {
               Femme
             </Link>
             <Link href="/a-propos" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
-              La Maison
+              À propos
             </Link>
             <Link href="/contact" className="nav-link text-cream/60 hover:text-cream text-[10px] font-medium tracking-[0.3em] uppercase transition-colors duration-300 pb-1">
               Contact
