@@ -3,6 +3,7 @@ import { Inter, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import VersionChecker from "@/components/VersionChecker";
 import PageTransition from "@/components/PageTransition";
+import LuxuryCursor from "@/components/LuxuryCursor";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
       className={`${inter.variable} ${playfair.variable} ${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-luxury-black">
+        <LuxuryCursor />
         <VersionChecker />
         <PageTransition />
         {children}
