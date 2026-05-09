@@ -62,7 +62,7 @@ export default async function Home() {
 
               {/* Eyebrow */}
               <div className="eyebrow stagger-item animate-delay-100">
-                Depuis 2010
+                Depuis 2026
               </div>
 
               {/* Main title */}
@@ -285,7 +285,7 @@ export default async function Home() {
             <div>
               <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
               <p className="text-cream/35 text-sm leading-relaxed">
-                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.
+                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2026.
               </p>
             </div>
 

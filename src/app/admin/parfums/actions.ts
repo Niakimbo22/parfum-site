@@ -16,7 +16,7 @@ const perfumeSchema = z.object({
   occasion: z.string().optional(),
   season: z.string().optional(),
   top_notes: z.string().optional(),
-  middle_notes: z.string().optional(),
+  heart_notes: z.string().optional(),
   base_notes: z.string().optional(),
   image_url: z.string().optional().nullable(),
 });
@@ -37,7 +37,7 @@ export async function createPerfume(data: unknown) {
       occasion: parsed.occasion,
       season: parsed.season,
       top_notes: parsed.top_notes,
-      middle_notes: parsed.middle_notes,
+      heart_notes: parsed.heart_notes,
       base_notes: parsed.base_notes,
       image_url: parsed.image_url,
     });
@@ -79,7 +79,7 @@ export async function updatePerfume(id: string, data: unknown) {
       occasion: parsed.occasion,
       season: parsed.season,
       top_notes: parsed.top_notes,
-      middle_notes: parsed.middle_notes,
+      heart_notes: parsed.heart_notes,
       base_notes: parsed.base_notes,
       image_url: parsed.image_url,
     })

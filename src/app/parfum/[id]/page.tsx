@@ -300,7 +300,7 @@ export default async function ParfumDetail({
             <div>
               <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
               <p className="text-cream/35 text-sm leading-relaxed">
-                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.
+                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2026.
               </p>
             </div>
             <div>

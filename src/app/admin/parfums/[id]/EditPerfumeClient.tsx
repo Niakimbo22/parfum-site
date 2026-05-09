@@ -17,7 +17,7 @@ interface Perfume {
   occasion: string | null;
   season: string | null;
   top_notes: string | null;
-  middle_notes: string | null;
+  heart_notes: string | null;
   base_notes: string | null;
   image_url: string | null;
 }
@@ -48,7 +48,7 @@ export default function EditPerfumeClient({ perfume }: Props) {
         occasion: formData.get("occasion"),
         season: formData.get("season"),
         top_notes: formData.get("top_notes"),
-        middle_notes: formData.get("middle_notes"),
+        heart_notes: formData.get("heart_notes"),
         base_notes: formData.get("base_notes"),
         image_url: formData.get("image_url"),
       });
@@ -212,8 +212,8 @@ export default function EditPerfumeClient({ perfume }: Props) {
               <label className="text-gray-400 text-xs uppercase tracking-widest">Notes de Cœur</label>
               <input
                 type="text"
-                name="middle_notes"
-                defaultValue={perfume.middle_notes || ""}
+                name="heart_notes"
+                defaultValue={perfume.heart_notes || ""}
                 className="w-full bg-luxury-slate border border-gold/10 text-white px-4 py-3 text-base rounded-sm focus:outline-none focus:border-gold/50"
                 placeholder="Séparez par des virgules"
               />

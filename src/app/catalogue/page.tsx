@@ -30,6 +30,7 @@ function CatalogContent() {
   const [loading, setLoading] = useState(true);
   const [activeFamily, setActiveFamily] = useState("Tous");
   const [activeGender, setActiveGender] = useState<Gender>(initialGender);
+  const [activeOccasion, setActiveOccasion] = useState("Tous");
   const [searchTerm, setSearchTerm] = useState("");
 
   const families = ["Tous", "Boisé", "Ambré Floral", "Oriental Boisé", "Floral", "Hespéridé"];
@@ -70,10 +71,13 @@ function CatalogContent() {
   const filteredPerfumes = perfumes.filter(p => {
     const matchesFamily = activeFamily === "Tous" || p.olfactory_family === activeFamily;
     const matchesGender = activeGender === "Tous" || p.gender === activeGender;
+    const matchesOccasion = activeOccasion === "Tous" || (
+      Array.isArray(p.occasion) ? p.occasion.includes(activeOccasion) : p.occasion === activeOccasion
+    );
     const matchesSearch =
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.brand?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFamily && matchesGender && matchesSearch;
+    return matchesFamily && matchesGender && matchesOccasion && matchesSearch;
   });
 
   const meta = GENDER_META[activeGender];
@@ -185,8 +189,16 @@ function CatalogContent() {
                     {["Tous", "Quotidien", "Soirée", "Professionnel", "Vacances"].map(o => (
                       <button
                         key={o}
-                        className="block w-full text-left text-xs px-4 py-2.5 text-cream/35 hover:text-cream transition-colors"
+                        onClick={() => setActiveOccasion(o)}
+                        className={`relative block w-full text-left text-xs px-4 py-2.5 transition-all duration-200 ${
+                          activeOccasion === o
+                            ? "text-gold bg-gold/5"
+                            : "text-cream/40 hover:text-cream"
+                        }`}
                       >
+                        {activeOccasion === o && (
+                          <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-gold"></span>
+                        )}
                         {o}
                       </button>
                     ))}
@@ -292,7 +304,7 @@ function CatalogContent() {
             <div>
               <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
               <p className="text-cream/35 text-sm leading-relaxed">
-                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.
+                Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2026.
               </p>
             </div>
             <div>

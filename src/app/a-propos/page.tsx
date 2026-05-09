@@ -22,7 +22,7 @@ export default function AboutPage() {
               <em className="not-italic text-gold italic">Les 2 As</em>
             </h1>
             <p className="text-[10px] tracking-[0.4em] uppercase text-gold/50">
-              L'excellence au service de vos sens depuis 2010
+              L'excellence au service de vos sens depuis 2026
             </p>
           </div>
         </section>
@@ -33,20 +33,20 @@ export default function AboutPage() {
             <div className="eyebrow justify-center mb-8">Notre Histoire</div>
             <div className="space-y-6 text-cream/60 leading-relaxed text-lg">
               <p>
-                Née d'une passion commune pour les fragrances d'exception, la Maison{" "}
-                <strong className="text-cream font-normal">Les 2 As</strong> a vu le jour au cœur de Paris.
-                Notre ambition était simple mais audacieuse : démocratiser l'accès à la haute parfumerie
-                tout en préservant son aura de luxe et d'exclusivité.
+                Tout a commencé par une obsession partagée : trouver les parfums qui font vraiment la différence.{" "}
+                <strong className="text-cream font-normal">Les 2 As</strong>, c'est deux passionnés qui ont
+                transformé des années de recherche olfactive en une sélection que vous pouvez enfin explorer
+                sans vous perdre.
               </p>
               <p>
-                Chaque parfum de notre collection est sélectionné avec une rigueur absolue. Nous collaborons
-                avec les plus grands nez et les maisons de composition les plus prestigieuses pour vous offrir
-                des sillages uniques, capables de sublimer votre personnalité.
+                Nous ne créons pas de parfums. Nous les trouvons. Nous les testons, les portons, les vivons —
+                et nous ne gardons que ceux qui nous ont convaincus. Dior, Creed, Chanel, MFK : chaque marque
+                dans notre catalogue y est pour une raison précise, pas pour faire du volume.
               </p>
               <p>
-                Chez Les 2 As, nous croyons que le parfum est bien plus qu'une simple senteur — c'est un
-                accessoire invisible, une signature émotionnelle qui raconte votre histoire sans prononcer
-                un seul mot.
+                Chez Les 2 As, un parfum n'est jamais un simple produit. C'est un choix que vous faites sur
+                vous-même — une présence silencieuse, une mémoire que vous laissez derrière vous.
+                Notre rôle est de vous aider à trouver le vôtre.
               </p>
             </div>
           </div>
@@ -60,18 +60,18 @@ export default function AboutPage() {
               {[
                 {
                   Icon: Award,
-                  title: "Qualité Suprême",
-                  desc: "Nous ne sélectionnons que les ingrédients les plus nobles et les compositions les plus raffinées pour garantir une tenue et une projection exceptionnelles.",
+                  title: "L'Œil du Connaisseur",
+                  desc: "Nous parcourons les maisons de parfumerie les plus prestigieuses pour ne retenir que ce qui mérite vraiment votre attention. Chaque flacon dans notre sélection a passé notre exigence — aucun autre.",
                 },
                 {
                   Icon: ShieldCheck,
-                  title: "Authenticité",
-                  desc: "L'authenticité est au cœur de notre démarche. Chaque produit est certifié et provient directement des sources de production les plus respectées.",
+                  title: "Confiance Absolue",
+                  desc: "Nos parfums proviennent directement des distributeurs officiels. Pas d'intermédiaire douteux, pas de contrefaçon — ce que vous recevez est exactement ce que vous croyez recevoir.",
                 },
                 {
                   Icon: Zap,
-                  title: "Innovation",
-                  desc: "Tout en respectant les traditions séculaires, nous explorons sans cesse de nouveaux territoires olfactifs pour vous surprendre et vous émerveiller.",
+                  title: "Le Bon Parfum, Pour Vous",
+                  desc: "Nous ne vendons pas tout. Nous choisissons. Notre catalogue est volontairement resserré pour que chaque fragrance ait sa raison d'être — et la vôtre.",
                 },
               ].map(({ Icon, title, desc }) => (
                 <div key={title} className="group text-center space-y-6">
@@ -106,7 +106,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div>
               <h3 className="font-serif text-cream text-lg mb-6 tracking-tight">Les 2 As</h3>
-              <p className="text-cream/35 text-sm leading-relaxed">Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2010.</p>
+              <p className="text-cream/35 text-sm leading-relaxed">Maison de parfumerie fine à Paris. L'excellence olfactive depuis 2026.</p>
             </div>
             <div>
               <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Boutique</h4>
@@ -119,9 +119,7 @@ export default function AboutPage() {
             <div>
               <h4 className="text-[9px] tracking-[0.4em] uppercase text-gold/60 mb-6">Contact</h4>
               <ul className="space-y-3 text-sm text-cream/40">
-                <li>123 Avenue des Champs-Élysées</li>
-                <li>75008 Paris, France</li>
-                <li><a href="mailto:contact@les2as.fr" className="hover:text-cream transition-colors">contact@les2as.fr</a></li>
+                {/* email à venir */}
               </ul>
             </div>
             <div>
