@@ -106,14 +106,16 @@ export default async function Home() {
                 <div
                   className="relative w-full h-full animate-float"
                   style={{
-                    maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                    maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+                    mixBlendMode: "luminosity",
                   }}
                 >
                   <img
                     src="/images/parfums/creed-aventus.png"
                     alt="Creed Aventus"
                     className="w-full h-full object-contain drop-shadow-2xl"
+                    style={{ filter: "brightness(0.92) contrast(1.05)" }}
                   />
                 </div>
                 <span className="absolute top-6 right-6 font-serif text-[80px] leading-none text-gold/5 pointer-events-none select-none">N°1</span>
