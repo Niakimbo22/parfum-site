@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   LayoutDashboard,
@@ -14,6 +14,7 @@ import {
   ShoppingBag,
   Menu,
   X,
+  BookOpen,
 } from "lucide-react";
 import { handleLogout } from "./logout-action";
 import AdminTutorial from "./AdminTutorial";
@@ -21,7 +22,6 @@ import AdminTutorial from "./AdminTutorial";
 interface Props {
   children: React.ReactNode;
   adminName: string;
-  showTutorial?: boolean;
 }
 
 const NAV_LINKS = [
@@ -35,8 +35,22 @@ const NAV_LINKS = [
   { href: "/admin/trash", label: "Corbeille", icon: Trash2 },
 ];
 
-export default function AdminShell({ children, adminName, showTutorial }: Props) {
+export default function AdminShell({ children, adminName }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [tutorialOpen, setTutorialOpen] = useState(false);
+
+  // Auto-show on first visit (per admin, per browser)
+  useEffect(() => {
+    const key = `tutorial_seen_${adminName}`;
+    if (!localStorage.getItem(key)) {
+      setTutorialOpen(true);
+    }
+  }, [adminName]);
+
+  const closeTutorial = () => {
+    localStorage.setItem(`tutorial_seen_${adminName}`, "1");
+    setTutorialOpen(false);
+  };
 
   const closeDrawer = () => setDrawerOpen(false);
 
@@ -81,7 +95,16 @@ export default function AdminShell({ children, adminName, showTutorial }: Props)
         })}
       </nav>
 
-      <div className="p-4 border-t border-gold/10">
+      <div className="p-4 border-t border-gold/10 space-y-2">
+        {/* Tuto button */}
+        <button
+          onClick={() => { setTutorialOpen(true); closeDrawer(); }}
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-sm hover:bg-gold/5 text-gold/50 hover:text-gold transition-colors text-sm"
+        >
+          <BookOpen className="w-4 h-4" />
+          Guide du dashboard
+        </button>
+
         <form action={handleLogout}>
           <button className="flex items-center gap-3 w-full px-4 py-3 rounded-sm hover:bg-red-500/10 text-red-400 transition-colors text-sm min-h-[44px]">
             <LogOut className="w-4 h-4" />
@@ -94,12 +117,12 @@ export default function AdminShell({ children, adminName, showTutorial }: Props)
 
   return (
     <div className="flex min-h-screen bg-slate-950 text-slate-200">
-      {/* Desktop sidebar — fixed, hidden on mobile */}
+      {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-64 border-r border-gold/10 bg-luxury-black flex-col fixed inset-y-0 z-50">
         <SidebarContent />
       </aside>
 
-      {/* Mobile drawer overlay backdrop */}
+      {/* Mobile drawer backdrop */}
       {drawerOpen && (
         <div
           className="fixed inset-0 bg-black/60 z-40 lg:hidden"
@@ -114,7 +137,6 @@ export default function AdminShell({ children, adminName, showTutorial }: Props)
           drawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Close button inside drawer */}
         <button
           onClick={closeDrawer}
           className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors"
@@ -127,7 +149,7 @@ export default function AdminShell({ children, adminName, showTutorial }: Props)
 
       {/* Main content */}
       <main className="flex-1 lg:pl-64 overflow-auto">
-        {/* Mobile sticky header */}
+        {/* Mobile header */}
         <div className="lg:hidden sticky top-0 z-30 bg-luxury-black border-b border-gold/10 flex items-center gap-4 px-4 py-3">
           <button
             onClick={() => setDrawerOpen(true)}
@@ -137,8 +159,15 @@ export default function AdminShell({ children, adminName, showTutorial }: Props)
             <Menu className="w-5 h-5" />
           </button>
           <span className="font-serif text-sm gold-text font-bold tracking-wider">ADMIN 2 AS</span>
-          <div className="ml-auto flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+          <div className="ml-auto flex items-center gap-3">
+            <button
+              onClick={() => setTutorialOpen(true)}
+              className="text-gold/40 hover:text-gold transition-colors"
+              aria-label="Ouvrir le guide"
+            >
+              <BookOpen className="w-4 h-4" />
+            </button>
+            <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
             <span className="text-[10px] text-gray-500 uppercase tracking-widest">{adminName}</span>
           </div>
         </div>
@@ -148,8 +177,10 @@ export default function AdminShell({ children, adminName, showTutorial }: Props)
         </div>
       </main>
 
-      {/* Tutorial — one-time, self-removes after seen */}
-      {showTutorial && <AdminTutorial adminName={adminName} />}
+      {/* Tutorial modal */}
+      {tutorialOpen && (
+        <AdminTutorial adminName={adminName} onClose={closeTutorial} />
+      )}
     </div>
   );
 }

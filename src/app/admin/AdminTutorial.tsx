@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { markTutorialSeen } from "./tutorial-action";
+import { useState } from "react";
 import {
   LayoutDashboard, Package, ShoppingBag, FileUp,
   History, MessageSquare, Trash2, ArrowRight, ArrowLeft,
@@ -10,6 +9,7 @@ import {
 
 interface Props {
   adminName: string;
+  onClose: () => void;
 }
 
 const STEPS = [
@@ -232,23 +232,12 @@ const STEPS = [
   },
 ];
 
-export default function AdminTutorial({ adminName }: Props) {
+export default function AdminTutorial({ adminName, onClose }: Props) {
   const [step, setStep] = useState(0);
-  const [closing, setClosing] = useState(false);
-  const [isPending, startTransition] = useTransition();
 
   const current = STEPS[step];
   const Icon = current.icon;
   const isLast = step === STEPS.length - 1;
-
-  const close = () => {
-    setClosing(true);
-    startTransition(async () => {
-      await markTutorialSeen();
-    });
-  };
-
-  if (closing) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
@@ -262,8 +251,7 @@ export default function AdminTutorial({ adminName }: Props) {
             <span className="text-[10px] text-gold/60">{step + 1}/{STEPS.length}</span>
           </div>
           <button
-            onClick={close}
-            disabled={isPending}
+            onClick={onClose}
             className="p-1.5 text-slate-600 hover:text-slate-300 transition-colors"
             aria-label="Fermer"
           >
@@ -321,9 +309,8 @@ export default function AdminTutorial({ adminName }: Props) {
 
           {isLast ? (
             <button
-              onClick={close}
-              disabled={isPending}
-              className="flex items-center gap-2 bg-gold text-luxury-black text-xs font-semibold tracking-widest uppercase px-5 py-2 hover:bg-gold-light transition-colors disabled:opacity-50"
+              onClick={onClose}
+              className="flex items-center gap-2 bg-gold text-luxury-black text-xs font-semibold tracking-widest uppercase px-5 py-2 hover:bg-gold-light transition-colors"
             >
               <CheckCircle className="w-3.5 h-3.5" />
               Terminé
