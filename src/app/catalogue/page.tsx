@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import { createClient } from "@/lib/supabase";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, Filter, SlidersHorizontal, ArrowRight, User2 } from "lucide-react";
+import { Search, Filter, SlidersHorizontal, ArrowRight, User2, Star } from "lucide-react";
 import { InstagramIcon, FacebookIcon } from "@/components/SocialIcons";
 import { useState, useEffect, Suspense } from "react";
 
@@ -31,6 +31,7 @@ function CatalogContent() {
   const [activeFamily, setActiveFamily] = useState("Tous");
   const [activeGender, setActiveGender] = useState<Gender>(initialGender);
   const [activeOccasion, setActiveOccasion] = useState("Tous");
+  const [onlyBestsellers, setOnlyBestsellers] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const families = ["Tous", "Boisé", "Ambré Floral", "Oriental Boisé", "Floral", "Hespéridé"];
@@ -77,7 +78,8 @@ function CatalogContent() {
     const matchesSearch =
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.brand?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFamily && matchesGender && matchesOccasion && matchesSearch;
+    const matchesBestseller = !onlyBestsellers || p.is_bestseller === true;
+    return matchesFamily && matchesGender && matchesOccasion && matchesSearch && matchesBestseller;
   });
 
   const meta = GENDER_META[activeGender];
@@ -178,6 +180,28 @@ function CatalogContent() {
                       </button>
                     ))}
                   </div>
+                </div>
+
+                {/* Best Sellers */}
+                <div className="border border-gold/20 bg-gold/3 p-4">
+                  <p className="text-[9px] tracking-[0.4em] uppercase text-gold/70 mb-3 flex items-center gap-2">
+                    <Star className="w-3 h-3 fill-gold/40 text-gold/70" /> Best Sellers
+                  </p>
+                  <button
+                    onClick={() => setOnlyBestsellers(v => !v)}
+                    className={`w-full flex items-center justify-between px-3 py-2.5 text-xs transition-all duration-200 border ${
+                      onlyBestsellers
+                        ? "bg-gold text-luxury-black border-gold font-semibold"
+                        : "bg-transparent text-cream/50 border-gold/20 hover:border-gold/50 hover:text-cream"
+                    }`}
+                  >
+                    <span className="tracking-widest uppercase">
+                      {onlyBestsellers ? "✦ Actif" : "Voir uniquement"}
+                    </span>
+                    {onlyBestsellers && (
+                      <span className="text-[9px] opacity-70">✕ retirer</span>
+                    )}
+                  </button>
                 </div>
 
                 {/* Occasions */}
