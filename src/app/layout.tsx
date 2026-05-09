@@ -4,6 +4,7 @@ import "./globals.css";
 import VersionChecker from "@/components/VersionChecker";
 import PageTransition from "@/components/PageTransition";
 import LuxuryCursor from "@/components/LuxuryCursor";
+import AmbientParticles from "@/components/AmbientParticles";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const inter = Inter({
@@ -49,6 +50,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-luxury-black">
         <LuxuryCursor />
+        <AmbientParticles />
         <ScrollReveal />
         <VersionChecker />
         <PageTransition />
